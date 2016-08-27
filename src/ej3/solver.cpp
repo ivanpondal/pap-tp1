@@ -18,14 +18,13 @@ int max_subarray_sum(vector<int>& v) {
 
 void run_solver() {
     int n, x;
-    cin >> n;
-
     vector<int> v;
 
+    cin >> n;
     while(n--) {
-        cin >>x;
+        cin >> x;
         v.push_back(x);
     }
-    
+
     cout << max_subarray_sum(v) << endl;
 }
