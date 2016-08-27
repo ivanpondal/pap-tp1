@@ -29,7 +29,3 @@ void run_solver() {
     cout << "read vector " << v << endl;
     cout << max_subarray_sum(v) << endl;
 }
-
-int max_int(int a, int b) {
-    return a > b ? a : b;
-}
