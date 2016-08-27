@@ -26,6 +26,6 @@ void run_solver() {
         cin >>x;
         v.push_back(x);
     }
-    cout << "read vector " << v << endl;
+    
     cout << max_subarray_sum(v) << endl;
 }
