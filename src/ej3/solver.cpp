@@ -8,8 +8,8 @@
 int max_subarray_sum(vector<int>& v) {
     int accum = 0, max_achieved = 0;
     for (int x : v) {
-        accum = max(accum + x, 0);
-        max_achieved = max(max_achieved, accum);
+        accum = max(accum + x, 0); // accumulate greedily, reset if sum goes negative
+        max_achieved = max(max_achieved, accum); // keep track of highest sum achieved
     }
     return max_achieved;
 }
