@@ -105,7 +105,7 @@ public:
 	}
 };
 
-Matriz id() {
+inline Matriz id() {
 	vector<int> vec(9,0);
 	for(int i=0;i<9;i+=4) {
 		vec[i] = 1;
@@ -113,7 +113,7 @@ Matriz id() {
 	return Matriz(vec);
 }
 
-istream& operator>>(istream& i, Matriz &mat) {
+inline istream& operator>>(istream& i, Matriz &mat) {
 	vector<int> vec(9);
 	for(int j=0;j<9;j++) {
 		i >> vec[j];
@@ -122,7 +122,7 @@ istream& operator>>(istream& i, Matriz &mat) {
 	return i;
 }
 
-ostream& operator<<(ostream& o, Matriz mat) {
+inline ostream& operator<<(ostream& o, Matriz mat) {
 	for(int i=0;i<3;i++) {
 		o << mat.val(i,0) <<" "<< mat.val(i,1) << " "<< mat.val(i,2) << endl;
 	}

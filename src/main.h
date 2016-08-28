@@ -2,8 +2,10 @@
 #define PAP_TP1_MAIN_H
 
 #include <iostream>      // cout, cin, <<
+#include <fstream>       // ifstream, ofstream
 #include <iomanip>       // stoi
 #include <unistd.h>      // getopt
+#include <cstdlib>       // srand, rand
 #include <vector>
 
 // Imprimir ayuda por pantalla

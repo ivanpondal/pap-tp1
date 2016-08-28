@@ -1,5 +1,4 @@
 #include "./ej4.h"
-#include "../matriz.h"
 
 using namespace std;
 
@@ -16,7 +15,9 @@ int min(int a, int b) {
 	return (a < b) ? a : b;
 }
 
-void calculate_matrix_products(Matriz *arr_m, Matriz *arr_prod_m, int i, int j, bool right_half) {
+void calculate_matrix_products(Matriz *arr_m, Matriz *arr_prod_m,
+		int i, int j, bool right_half) {
+
 	if (right_half) {
 		arr_prod_m[i] = arr_m[i];
 		for (int k = i + 1; k < j; k++) {
@@ -32,12 +33,10 @@ void calculate_matrix_products(Matriz *arr_m, Matriz *arr_prod_m, int i, int j, 
 }
 
 bool subarray_exists(Matriz *arr_m, Matriz &m, Matriz *arr_prod_m,
-		int n, int l, int i, int j, bool right_half, int *sol_i, int *sol_j) {
+		int n, int l, int i, int j, bool right_half) {
 
 	if (n == 1) {
 		if (l == 1 && arr_m[i] == m) {
-			*sol_i = i;
-			*sol_j = j;
 			return true;
 		}
 		else {
@@ -49,10 +48,10 @@ bool subarray_exists(Matriz *arr_m, Matriz &m, Matriz *arr_prod_m,
 			int middle = n / 2;
 
 			bool sol_right_half = subarray_exists(
-					arr_m, m, arr_prod_m, n - middle, l, i + middle, j, true, sol_i, sol_j);
+					arr_m, m, arr_prod_m, n - middle, l, i + middle, j, true);
 
 			bool sol_left_half = subarray_exists(
-					arr_m, m, arr_prod_m, middle, l, i, i + middle, false, sol_i, sol_j);
+					arr_m, m, arr_prod_m, middle, l, i, i + middle, false);
 
 			if (sol_right_half || sol_left_half) {
 				return true;
@@ -63,8 +62,6 @@ bool subarray_exists(Matriz *arr_m, Matriz &m, Matriz *arr_prod_m,
 
 				for (int k = start; k < end; k++) {
 					if (arr_prod_m[k - l + 1] * arr_prod_m[k] == m) {
-						*sol_i = k - l + 1;
-						*sol_j = k + 1;
 						return true;
 					}
 				}
@@ -92,9 +89,7 @@ void run_solver() {
 		cin >> arr_m[i];
 	}
 
-	int sol_i, sol_j;
-
-	bool solution = subarray_exists(arr_m, m, arr_prod_m, n, l, 0, n, true, &sol_i, &sol_j);
+	bool solution = subarray_exists(arr_m, m, arr_prod_m, n, l, 0, n, true);
 
 	cout << (solution ? "SI" : "NO") << endl;
 }
