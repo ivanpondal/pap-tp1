@@ -10,7 +10,7 @@ using namespace std;
 
 void test_sample_input_1() {
 	ifstream input_file;
-	input_file.open("ej4/input_1");
+	input_file.open("ej4/test_cases/input_1");
 
 	int n, l;
 	Matriz m;
@@ -33,7 +33,7 @@ void test_sample_input_1() {
 
 void test_sample_input_2() {
 	ifstream input_file;
-	input_file.open("ej4/input_2");
+	input_file.open("ej4/test_cases/input_2");
 
 	int n, l;
 	Matriz m;
@@ -56,7 +56,7 @@ void test_sample_input_2() {
 
 void test_sample_input_3() {
 	ifstream input_file;
-	input_file.open("ej4/input_3");
+	input_file.open("ej4/test_cases/input_3");
 
 	int n, l;
 	Matriz m;
@@ -79,7 +79,7 @@ void test_sample_input_3() {
 
 void test_sample_input_4() {
 	ifstream input_file;
-	input_file.open("ej4/input_4");
+	input_file.open("ej4/test_cases/input_4");
 
 	int n, l;
 	Matriz m;
