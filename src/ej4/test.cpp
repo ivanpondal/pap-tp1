@@ -18,8 +18,8 @@ void test_sample_input_1() {
 	input_file >> n >> l;
 	input_file >> m;
 
-	Matriz arr_m[n];
-	Matriz arr_prod_m[n];
+	vector<Matriz> arr_m(n);
+	vector<Matriz> arr_prod_m(n);
 
 	for (int i = 0; i < n; i++) {
 		input_file >> arr_m[i];
@@ -41,8 +41,8 @@ void test_sample_input_2() {
 	input_file >> n >> l;
 	input_file >> m;
 
-	Matriz arr_m[n];
-	Matriz arr_prod_m[n];
+	vector<Matriz> arr_m(n);
+	vector<Matriz> arr_prod_m(n);
 
 	for (int i = 0; i < n; i++) {
 		input_file >> arr_m[i];
@@ -64,8 +64,8 @@ void test_sample_input_3() {
 	input_file >> n >> l;
 	input_file >> m;
 
-	Matriz arr_m[n];
-	Matriz arr_prod_m[n];
+	vector<Matriz> arr_m(n);
+	vector<Matriz> arr_prod_m(n);
 
 	for (int i = 0; i < n; i++) {
 		input_file >> arr_m[i];
@@ -87,8 +87,8 @@ void test_sample_input_4() {
 	input_file >> n >> l;
 	input_file >> m;
 
-	Matriz arr_m[n];
-	Matriz arr_prod_m[n];
+	vector<Matriz> arr_m(n);
+	vector<Matriz> arr_prod_m(n);
 
 	for (int i = 0; i < n; i++) {
 		input_file >> arr_m[i];
@@ -104,8 +104,8 @@ void test_base_case() {
 	int n = 1;
 	int l = 1;
 
-	Matriz arr_m[1];
-	Matriz arr_prod_m[1];
+	vector<Matriz> arr_m(1);
+	vector<Matriz> arr_prod_m(1);
 
 	Matriz m({1, 2, 3, 4, 5, 6, 7, 8, 9});
 	arr_m[0] = m;
@@ -124,8 +124,8 @@ void test_big_instance() {
 
 	srand(42);
 
-	Matriz arr_m[n];
-	Matriz arr_prod_m[n];
+	vector<Matriz> arr_m(n);
+	vector<Matriz> arr_prod_m(n);
 	vector<int> vec(9);
 
 	for (int i = 0; i < n; i++) {

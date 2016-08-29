@@ -4,7 +4,7 @@
 
 # flags used in implicit rules
 CC=g++
-CPPFLAGS=-g -Wall -O2
+CPPFLAGS=-g -pedantic -Wall -O2
 CXXFLAGS=-std=c++11
 
 EXECUTABLES_BASE=ej1 ej2 ej3 ej4

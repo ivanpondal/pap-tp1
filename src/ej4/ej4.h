@@ -11,7 +11,7 @@
 // Here go declarations of functions which are exported by the problem solver,
 // global variables, etc.
 
-bool subarray_exists(Matriz *arr_m, Matriz &m, Matriz *arr_prod_m,
+bool subarray_exists(vector<Matriz> &arr_m, Matriz &m, vector<Matriz> &arr_prod_m,
 		int n, int l, int i, int j, bool right_half);
 
 #endif // PAP_TP1_EJ4_H

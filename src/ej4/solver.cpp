@@ -15,7 +15,7 @@ int min(int a, int b) {
 	return (a < b) ? a : b;
 }
 
-void calculate_matrix_products(Matriz *arr_m, Matriz *arr_prod_m,
+void calculate_matrix_products(vector<Matriz> &arr_m, vector<Matriz> &arr_prod_m,
 		int i, int j, bool right_half) {
 
 	if (right_half) {
@@ -32,7 +32,7 @@ void calculate_matrix_products(Matriz *arr_m, Matriz *arr_prod_m,
 	}
 }
 
-bool subarray_exists(Matriz *arr_m, Matriz &m, Matriz *arr_prod_m,
+bool subarray_exists(vector<Matriz> &arr_m, Matriz &m, vector<Matriz> &arr_prod_m,
 		int n, int l, int i, int j, bool right_half) {
 
 	if (n == 1) {
@@ -82,8 +82,8 @@ void run_solver() {
 	cin >> n >> l;
 	cin >> m;
 
-	Matriz arr_m[n];
-	Matriz arr_prod_m[n];
+	vector<Matriz> arr_m(n);
+	vector<Matriz> arr_prod_m(n);
 
 	for (int i = 0; i < n; i++) {
 		cin >> arr_m[i];

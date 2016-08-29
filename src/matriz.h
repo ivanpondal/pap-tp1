@@ -1,7 +1,7 @@
 #ifndef __MATRIZ__
 #define __MATRIZ__
 
-#include <bits/stdc++.h>
+#include <cassert>
 
 using namespace std;
 
