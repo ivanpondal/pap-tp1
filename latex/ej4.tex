@@ -1,0 +1,78 @@
+\section{Ejercicio 4}
+
+\subsection{Introducción}
+
+Para este ejercicio se pedía dado un arreglo de $N$ matrices en
+$\mathbb{Z}_{10007}^{3 \times 3}$ decidir si existía un subarreglo de longitud
+$L$ tal que su producto fuera igual a $M \in \mathbb{Z}_{10007}^{3 \times 3}$.
+Además, el algoritmo desarrollado debía tener una complejidad temporal $\ord(N
+\times \log N)$.
+
+\subsection{Solución propuesta}
+
+La solución desarrollada hace uso de la técnica de \emph{Divide \& Conquer}.
+Esto se debe a que el problema tiene la característica de poder ser dividido en
+subproblemas más pequeños que unidos resuelven lo pedido.
+
+Si existe el subarreglo cuyo producto corresponde a $M$ es bajo alguna de
+las siguientes posibilidades:
+
+\begin{itemize}
+	\item El subarreglo existe en $\left[ 0,\frac{N}{2} \right)$.
+	\item El subarreglo existe en $\left[\frac{N}{2}, N \right)$.
+	\item El subarreglo está atravesando ambas mitades.
+\end{itemize}
+
+En caso de no cumplirse ninguna de estas opciones el subarreglo pedido no
+existe.
+
+De esta forma se puede ver entonces cómo partiendo el arreglo en dos
+mitades el ejercicio se puede resolver llamando el algoritmo de forma recursiva
+sobre cada una y estudiando el caso donde atraviesa a ambas.
+
+A continuación se presenta el pseudocódigo que resuelve el problema:
+
+\begin{algorithm}[H]
+	\caption{Producto subarreglo de matrices}
+	\Input{Enteros positivos $N$ y $L$, índices $i$ y $j$, una matriz $M$ y un
+	arreglo de matrices de longitud $N$ pertenecientes a $\mathbb{Z}_{10007}^{3
+	\times 3}$.}
+	\Output{Devuelve \texttt{true} en caso de existir un subarreglo cuyo producto
+	sea igual a $M$, \texttt{false} caso contrario.}
+	\eIf{$N == 1$} {
+		\eIf{$L == 1$ y el único elemento del arreglo es igual a $M$} {
+			\Return{\texttt{true}} \;
+		}
+		{
+			guardar el elemento en la posición $i$ del arreglo de productos \;
+		}
+	}
+	{
+		\eIf{$L \leq N$} {
+			$mitad$ $\gets$ $\frac{N}{2}$ \;
+			$derechaResuelve$ $\gets$ llamada recursiva con $N = N - mitad$, $i =
+			i + mitad$ \;
+			$izquierdaResuelve$ $\gets$ llamada recursiva con $N = mitad$, $j = i
+			+ mitad$ \;
+			\eIf{$derechaResuelve$ ó $izquierdaResuelve$} {
+				\Return{\texttt{true}} \;
+			}
+			{
+				\eIf{existe producto de longitud $L$ con resultado $M$ que
+				atraviese las mitades} {
+					\Return{\texttt{true}} \;
+				}
+				{
+					calcular y guardar el producto de matrices entre $i$ y $j$ \;
+				}
+			}
+		}
+		{
+			calcular y guardar el producto de matrices entre $i$ y $j$ \;
+		}
+	}
+
+	\Return{\texttt{false}} \;
+\end{algorithm}
+
+
