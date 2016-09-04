@@ -5,15 +5,21 @@ Dado un arreglo de números enteros de entrada, se pide encontrar la máxima sum
 
 \subsection{Algoritmo e intuición}
 
-\noindent Entrada: \textit{A} \newline
-\textit{acumulador}, \textit{máximo} $\leftarrow 0$ \newline
-\textbf{para} x \textbf{en} \textit{A} \textbf{hacer} \newline
-\indent $\mathit{acumulador} \leftarrow \mathit{acumulador + x}$ si es positivo, $0$ de lo contrario \newline
-\indent \textit{máximo} $\leftarrow$ el máximo entre \textit{máximo} y $\mathit{acumulador}$
+\begin{algorithm}[H]
+	\caption{Máxima suma de subarreglos}
+	\Input{Arreglo $A$ de números enteros}
+    % \Output{Bla}
+    $\mathit{acumulador, mayorAlcanzado} \gets 0$ \;
+    \For{$x$ en $A$} {
+        $\mathit{acumulador} \gets$ el máximo entre $\mathit{acumulador}+x$ y $0$ \;
+        $\mathit{mayorAlcanzado} \gets$ el máximo entre $\mathit{mayorAlcanzado}$ y $\mathit{acumulador}$
+    }
+    \Return{$\mathit{mayorAlcanzado}$}
+\end{algorithm}
 
 \bigskip
 
-Nuestro algoritmo itera los elementos del arreglo recorriéndolo de principio a fin una sola vez. En cada iteración, suma en un acumulador inicializado en cero el elemento correspondiente, siempre que al sumarlo la acumulación resulte positiva; de lo contrario, vuelve a poner el acumulador en cero. De esta forma, luego de la iteración $k$, \textit{acumulador} tiene el valor de la suma o bien de un subarreglo cuyo último elemento es el $k$\textit{-ésimo} del arreglo, o bien la del subarreglo vacío. Además, el algoritmo tiene en \textit{máximo} luego de cada iteración un registro del máximo valor de acumulación conseguido hasta ese momento.
+Nuestro algoritmo itera los elementos del arreglo recorriéndolo de principio a fin una sola vez. En cada iteración, suma en un acumulador inicializado en cero el elemento correspondiente, siempre que al sumarlo la acumulación resulte positiva; de lo contrario, vuelve a poner el acumulador en cero. De esta forma, luego de la iteración $k$, \textit{acumulador} tiene el valor de la suma o bien de un subarreglo cuyo último elemento es el $k$\textit{-ésimo} del arreglo, o bien la del subarreglo vacío. Además, el algoritmo tiene en \textit{mayorAlcanzado} luego de cada iteración un registro del máximo valor de acumulación conseguido hasta ese momento.
 
 La intuición detrás del algoritmo es que, mientras un subarreglo en particular sume una cantidad positiva, tiene sentido seguir considerándolo como el prefijo de un subarreglo candidato a realizar la suma óptima, ya que esa suma puede aportar una cantidad útil a lo que sumen los elementos que siguen; en cambio, al ser negativa la suma de un subarreglo, no tiene sentido verlo como prefijo de un subarreglo candidato ya que su suma sólo le restaría a lo que puedan aportar los elementos siguientes. En este sentido, el poner en cero el acumulador luego de encontrar una acumulación negativa equivale a descartar el subarreglo que se estaba evaluando desde la última vez que el acumulador se anuló y empezar a evaluar subarreglos que comienzan inmediatamente después del descartado.
 
@@ -33,6 +39,6 @@ Vamos a ver la correctitud de nuestro algoritmo demostrando que el mismo necesar
     \item \textbf{Caso} $\mathbf{i > 0}$. Sea $S_{pre}$ el prefijo de $A$ cuyo último elemento es el $i-1$\textit{-ésimo} de $A$. En este caso, todo sufijo de $S_{pre}$ suma necesariamente una cantidad menor o igual a $0$, ya que si existiera uno que suma una cantidad positiva, podríamos tomar el subarreglo que resulta de concatenar ese sufijo con $S$ y obtener una suma mayor a $s$. Por lo tanto, podemos afirmar que al comenzar a recorrer el subarreglo $S$, \textit{acumulador} está en $0$.
 \end{itemize}
 
-Como $S$ no tiene prefijos que sumen una cantidad negativa o nula, una vez que el ciclo comienza a iterar sus elementos \textit{acumulador} nunca se pondrá en cero mientras el ciclo recorra $S$. Por ende, al finalizar el recorrido de $S$, \textit{máximo} tendrá el valor $s$. Además, dicha variable sólo cambia de valor en iteraciones en las que \textit{acumulador} tiene un valor mayor aún. Dado que \textit{acumulador} sólo toma valores de sumas de subarreglos de $A$ y siendo por hipótesis $s$ mayor o igual a todos esos valores, podemos concluir que, al finalizar la ejecución del ciclo, \textit{máximo} es igual a $s$. Como el valor de retorno del algoritmo es el que tiene \textit{máximo} luego del ciclo, el mismo devuelve $s$.
+Como $S$ no tiene prefijos que sumen una cantidad negativa o nula, una vez que el ciclo comienza a iterar sus elementos \textit{acumulador} nunca se pondrá en cero mientras el ciclo recorra $S$. Por ende, al finalizar el recorrido de $S$, \textit{mayorAlcanzado} tendrá el valor $s$. Además, dicha variable sólo cambia de valor en iteraciones en las que \textit{acumulador} tiene un valor mayor aún. Dado que \textit{acumulador} sólo toma valores de sumas de subarreglos de $A$ y siendo por hipótesis $s$ mayor o igual a todos esos valores, podemos concluir que, al finalizar la ejecución del ciclo, \textit{mayorAlcanzado} es igual a $s$. Como el valor de retorno del algoritmo es el que tiene \textit{mayorAlcanzado} luego del ciclo, el mismo devuelve $s$.
 
 \subsection{Casos de prueba}
