@@ -5,6 +5,8 @@
 #include <vector>
 #include <iostream>
 
+#define INPUT_SIZE_UPPER_BOUND 100000
+
 using namespace std;
 
 /*
