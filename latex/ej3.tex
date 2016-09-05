@@ -42,3 +42,35 @@ Vamos a ver la correctitud de nuestro algoritmo demostrando que el mismo necesar
 Como $S$ no tiene prefijos que sumen una cantidad negativa o nula, una vez que el ciclo comienza a iterar sus elementos \textit{acumulador} nunca se pondrá en cero mientras el ciclo recorra $S$. Por ende, al finalizar el recorrido de $S$, \textit{mayorAlcanzado} tendrá el valor $s$. Además, dicha variable sólo cambia de valor en iteraciones en las que \textit{acumulador} tiene un valor mayor aún. Dado que \textit{acumulador} sólo toma valores de sumas de subarreglos de $A$ y siendo por hipótesis $s$ mayor o igual a todos esos valores, podemos concluir que, al finalizar la ejecución del ciclo, \textit{mayorAlcanzado} es igual a $s$. Como el valor de retorno del algoritmo es el que tiene \textit{mayorAlcanzado} luego del ciclo, el mismo devuelve $s$.
 
 \subsection{Casos de prueba}
+
+Utilizamos las siguientes familias de casos de prueba. Se entrega con los fuentes del trabajo un código que testea el programa correspondiente con determinadas instancias de cada una de ellas.
+
+\begin{itemize}
+    \item El caso del arreglo vacío, en el que la suma óptima es trivialmente $0$.
+    \item Casos no-vacíos en los que la suma óptima es $0$. Por ejemplo, un caso de números negativos en el que la suma óptima la tiene el subarreglo vacío, como
+    \[
+        \{-1,-1,-1,-1,-1\}
+    \]
+    o casos de elementos negativos o nulos en los que más subarreglos realizan la suma óptima, como
+    \[
+        \{-1,-1,0,-1,0\}
+    \]
+    \item Casos en los que la suma óptima es la de todo el arreglo. Por ejemplo, arreglos de todos números positivos o nulos como
+    \[
+        \{1,2,0,3,0,4\}
+    \]
+    o de números positivos y negativos como
+    \[
+        \{1,2,3,4,5,-1,-2,-3,6,-5,1,2,3,4\}
+    \]
+    \item Casos en los que la suma óptima es la de un prefijo no-vacío, como por ejemplo
+    \[
+        \{1,2,3,4,5,-1,-2,-3,-4,-5,1,2,3,4\}
+    \]
+    \item Casos en los que el subarreglo que realiza la suma óptima no es prefijo ni sufijo, como
+    \[
+        \{1,2,-7,1,2,3,4,5,-16,2\}
+    \]
+    \item Casos de gran magnitud de elementos para verificar que el algoritmo los procesa correctamente en tiempo razonable. Específicamente, se utilizaron casos de arreglos del tamaño máximo sugerido por la cátedra ($10^5$) de enteros no-negativos generados aleatoriamente. Elegimos utilizar números no-negativos como una forma de asegurarnos de conocer el resultado correcto para esos casos aleatorios, que según la teoría corresponde en todos ellos a la suma de todos sus elementos (al ser positivos o nulos, quitar cualquier combinación de ellos no puede aumentar ese valor).
+
+\end{itemize}
