@@ -41,6 +41,10 @@ Vamos a ver la correctitud de nuestro algoritmo demostrando que el mismo necesar
 
 Como $S$ no tiene prefijos que sumen una cantidad negativa o nula, una vez que el ciclo comienza a iterar sus elementos \textit{acumulador} nunca se pondrá en cero mientras el ciclo recorra $S$. Por ende, al finalizar el recorrido de $S$, \textit{mayorAlcanzado} tendrá el valor $s$. Además, dicha variable sólo cambia de valor en iteraciones en las que \textit{acumulador} tiene un valor mayor aún. Dado que \textit{acumulador} sólo toma valores de sumas de subarreglos de $A$ y siendo por hipótesis $s$ mayor o igual a todos esos valores, podemos concluir que, al finalizar la ejecución del ciclo, \textit{mayorAlcanzado} es igual a $s$. Como el valor de retorno del algoritmo es el que tiene \textit{mayorAlcanzado} luego del ciclo, el mismo devuelve $s$.
 
+\subsection{Complejidad}
+
+El algoritmo recorre el arreglo de entrada exactamente una vez en su enteridad, siguiendo un ciclo cuya iteración consiste en una cantidad constante de comparaciones y asignaciones. Las operaciones fuera del ciclo se limitan también a un tiempo constante. Por lo tanto, si $n$ es el número de elementos del arreglo, la complejidad temporal del algoritmo es $\Theta(n)$, que cumple con la complejidad requerida de $O(n)$.
+
 \subsection{Casos de prueba}
 
 Utilizamos las siguientes familias de casos de prueba. Se entrega con los fuentes del trabajo un código que testea el programa correspondiente con determinadas instancias de cada una de ellas.
