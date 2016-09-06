@@ -42,7 +42,7 @@ void recursive_sums_without_next(vector<int> &sums, vector<int> set, unsigned in
 // Returns the nearest to element int in vec, but only it it's less or equal.
 // Returns zero if every int in vec is greater than element.
 // vec must be increasingly sorted
-int binarySearch(vector<int> vec, int element) {
+int binary_search(vector<int> vec, int element) {
 	int left = 0;
 	int right = vec.size() - 1;
 	int middle = right / 2;
@@ -94,14 +94,14 @@ void run_solver() {
 			break;
 		}
 		if(firstSums[i] < budget) {
-			int sum = firstSums[i] + binarySearch(secondSums, budget - firstSums[i]);
+			int sum = firstSums[i] + binary_search(secondSums, budget - firstSums[i]);
 			if(sum > maxDonuts)
 				maxDonuts = sum;
 		}
 	}
 
 	if(maxDonuts == 0)
-		maxDonuts = binarySearch(secondSums, budget);
+		maxDonuts = binary_search(secondSums, budget);
 	cout << maxDonuts << endl;
 
 }
