@@ -16,5 +16,5 @@ using namespace std;
 // global variables, etc.
 void recursive_sums_with_next(vector<int> &sums, vector<int> set, unsigned int index, int sum);
 void recursive_sums_without_next(vector<int> &sums, vector<int> set, unsigned int index, int sum);
-
+int solution(int budget, vector<int> donutPacks);
 #endif // PAP_TP1_EJ1_H

@@ -60,27 +60,16 @@ int binary_search(vector<int> vec, int element) {
 	return vec[left];
 }
 
-void run_solver() {
-	int budget, n;
-	cin >> budget >> n;
+int solution(int budget, vector<int> donutPacks) {
 
+	int n = donutPacks.size();
 	int half = n / 2;
 
-	vector<int> first, second;
-	first.reserve(half);
-	second.reserve(n - half);			// second could be larger than first by one
+	vector<int> first(half);
+	vector<int> second(n - half);			// second could be larger than first by one
 
-	for(int i = 0; i < half; i++) {
-		int donuts;
-		cin >> donuts;
-		first.push_back(donuts);
-	}
-
-	for(int i = 0; i < n - half; i++) {
-		int donuts;
-		cin >> donuts;
-		second.push_back(donuts);
-	}
+	copy(donutPacks.begin(), donutPacks.begin() + half, first.begin());
+	copy(donutPacks.begin() + half, donutPacks.end() + half, second.begin());
 
 	vector<int> firstSums = all_sums(first);
 	vector<int> secondSums = all_sums(second);
@@ -102,6 +91,22 @@ void run_solver() {
 
 	if(maxDonuts == 0)
 		maxDonuts = binary_search(secondSums, budget);
-	cout << maxDonuts << endl;
+
+	return maxDonuts;
+}
+
+void run_solver() {
+	int budget, n;
+	cin >> budget >> n;
+
+	vector<int> donutPacks;
+	donutPacks.reserve(n);
+	for(int i = 0; i < n; i++) {
+		int donuts;
+		cin >> donuts;
+		donutPacks.push_back(donuts);
+	}
+
+	cout << solution(budget, donutPacks) << endl;
 
 }
