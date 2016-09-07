@@ -151,6 +151,32 @@ void test_big_instance() {
 	}
 }
 
+void test_big_instance_no_solution() {
+	int n = 10000;
+
+	srand(42);
+
+	vector<Matriz> arr_m(n);
+	vector<Matriz> arr_prod_m(n);
+	vector<int> vec(9);
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < 9; j++) {
+			vec[j] = rand();
+		}
+		arr_m[i] = Matriz(vec);
+	}
+
+	Matriz m({-1, -1, -1, -1, -1, -1, -1, -1, -1});
+	for (int k = 0; k < 10; k++) {
+		int l = rand() % n + 1;
+
+		bool solution = subarray_exists(arr_m, m, arr_prod_m, n, l, 0, n, true);
+
+		ASSERT(!solution);
+	}
+}
+
 void run_unit_tests() {
 	RUN_TEST(test_sample_input_1);
 	RUN_TEST(test_sample_input_2);
@@ -158,4 +184,5 @@ void run_unit_tests() {
 	RUN_TEST(test_sample_input_4);
 	RUN_TEST(test_base_case);
 	RUN_TEST(test_big_instance);
+	RUN_TEST(test_big_instance_no_solution);
 }
