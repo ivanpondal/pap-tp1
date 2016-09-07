@@ -145,4 +145,47 @@ A continuación se presenta el pseudocódigo del algoritmo que resuelve el probl
 	\Return{\texttt{false}} \;
 \end{algorithm}
 
+\subsection{Demostración de correctitud}
+
+Para demostrar que el algoritmo desarrollado es correcto se debe probar que el
+mismo responde \texttt{true} si y sólo si existe el subarreglo buscado.
+
+La misma se realizará mediante inducción sobre el valor de $N$ dado un $L$ fijo.
+
+\subsubsection*{Caso base}
+
+Cuando $N = 1$ si $L = 1$ y el único elemento disponible del arreglo corresponde
+al producto buscado entonces se cumple lo pedido ya que la solución es la matriz
+en esta posición. Caso contrario devuelve \texttt{false} ya que con que no se
+cumpla cualquiera de las condiciones anteriores la matriz en tal posición no es
+el subarreglo buscado.
+
+\subsubsection*{Paso inductivo}
+
+Suponemos que el algoritmo funciona para arreglos de hasta tamaño $N$ inclusive,
+queremos ver que lo hace para $N + 1$.
+
+Primero que nada, si $L > N + 1$ automáticamente sabemos que no existe tal
+arreglo, por lo tanto hasta acá el código desarrollado se comporta de la forma
+esperada.
+
+Si $L \leq N + 1$ entonces el mismo se llamará de forma recursiva en las mitades
+de tamaño $\frac{N + 1}{2}$ y $N - \frac{N + 1}{2}$ respectivamente. Por
+hipótesis inductiva, como sabemos que el algoritmo funciona para arreglos de
+longitud menor o igual a $N$ en particular lo hace para $\frac{N + 1}{2}$ y $N -
+\frac{N + 1}{2}$. De esta manera el mismo nos puede decir si el subarreglo de
+longitud $L$ existe en alguna de las dos mitades, si lo hace en cualquiera de
+las dos, devuelve \texttt{true}. Caso contrario, es necesario ver si existe
+atravesando ambas mitades. Para ello se realiza el producto de todo subarreglo
+de longitud $L$ que esté repartido entre ambas mitades. Si uno de estos
+subarreglos cumple lo pedido entonces el programa da \texttt{true}, si no
+entonces el mismo no existe para $N + 1$. Esto se debe a que si no existe
+atravesando las dos mitades debía existir en alguna de las dos, pero estábamos
+asumiendo el caso donde las llamadas recursivas dieron \texttt{false}, con lo
+cual efectivamente no quedan más lugares donde buscar el producto.
+
+De esta forma queda demostrado que para un $L$ y cualquier $N$ el algoritmo
+encuentra el subarreglo buscado en caso de existir. Dado que no realizamos
+ninguna suposición sobre $L$ podemos extender sin pérdida de generalidad la
+demostración a cualquier valor del mismo.
 
