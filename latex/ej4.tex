@@ -189,3 +189,38 @@ encuentra el subarreglo buscado en caso de existir. Dado que no realizamos
 ninguna suposición sobre $L$ podemos extender sin pérdida de generalidad la
 demostración a cualquier valor del mismo.
 
+\subsection{Complejidad teórica}
+
+Dado que se trata de un problema resuelto mediante \emph{Divide \& Conquer} es
+posible utilizar el Teorema Maestro para calcular su complejidad teórica. El
+mismo define la siguiente recurrencia para caracterizar estos problemas:
+
+\begin{equation*}
+	T\left(n\right) = a \times T\left(\frac{n}{b}\right) + f\left(n\right)
+\end{equation*}
+
+Para este ejercicio, $n$ corresponde al tamaño del arreglo $N$, $a = 2$ y $b = 2$ ya que se divide el problema en dos y se
+deben recorrer ambas mitades, y $f\left(n\right)$ corresponde a la unión que en
+nuestro caso es el cálculo de productos de matrices que en la Sección
+\ref{ej4:sol} vimos que tenía un costo lineal sobre el tamaño de $N$.
+
+Una de las cotas que ofrece el Teorema Maestro es la siguiente:
+
+\begin{equation*}
+	f\left(n\right) \in \Theta\left(n^{\log_b\left(a\right)}\right)
+	\implies T\left(n\right) \in \Theta\left(n^{\log_b\left(a\right)} \times
+	\log\left(n\right)\right)
+\end{equation*}
+
+Como tenemos $a = b = 2$, $\log_b\left(a\right) = 1$ y se cumple
+$f\left(n\right) \in \Theta\left(n\right)$. Por lo tanto, la complejidad del
+algoritmo está dada por:
+
+\begin{equation*}
+	T\left(n\right) \in \Theta\left(n \times \log\left(n\right)\right)
+\end{equation*}
+
+Queda demostrado entonces que la complejidad teórica del algoritmo cumple con lo
+requerido por el ejercicio resultando en $\Theta\left(n \times
+\log\left(n\right)\right)$.
+
