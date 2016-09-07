@@ -5,8 +5,6 @@
 **  Problem solver
 */
 
-using namespace std;
-
 int calculate(int N, vector< vector<int> > &diversion, vector<int> &dp, int mask) {
 	if (dp[mask] != -1)
 		return dp[mask];
@@ -32,6 +30,14 @@ int calculate(int N, vector< vector<int> > &diversion, vector<int> &dp, int mask
 	return res;
 }
 
+int calculate_max_diversion(int N, vector< vector<int> > &diversion) {
+	//Dynamic programming solutions
+	vector<int> dp = vector<int>((1<<N), -1);
+	dp[0] = 0;
+	//Calculate
+	return calculate(N, diversion, dp, (1<<N)-1);
+}
+
 void run_solver() {
 	//Data Input
 	int N;
@@ -42,11 +48,8 @@ void run_solver() {
 			cin >> diversion [i][j];
 		}
 	}
-	//Dynamic programming solutions
-	vector<int> dp = vector<int>((1<<N), -1);
-	dp[0] = 0;
-	//Main solver
-	calculate(N, diversion, dp, (1<<N)-1);
+	//Call solver function
+	int res = calculate_max_diversion(N, diversion);
 	//Output
-	cout << dp[(1<<N)-1] << endl;
+	cout << res << endl;
 }

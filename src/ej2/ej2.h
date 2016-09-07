@@ -3,11 +3,12 @@
 
 #include "../main.h"
 
+using namespace std;
+
 /*
 **  Exercise 2
 */
 
-// Here go declarations of functions which are exported by the problem solver,
-// global variables, etc.
+int calculate_max_diversion(int N, vector< vector<int> > &diversion);
 
 #endif // PAP_TP1_EJ2_H
