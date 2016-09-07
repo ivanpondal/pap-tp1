@@ -1,29 +1,57 @@
 \section{Ejercicio 2}
 
 \subsection{Problema}
-El enunciado explica un problema en el cual tengo una cierta cantidad de 'amigas' de Lisa $N$ y para cada una de ellas sabemos la diversión que cada par de amigas aporta a una fiesta. Luego nos pide hallar la máxima diversión que se puede obtener separando a sus amigas en 'fiestas' donde cada fiesta le aporta la diversión que suman las amigas que estan en ella. \\
-Yendo al algoritmo, tenemos como entrada un valor entero positivo N y una matriz $D$ de N x N simétrica con valores enteros y diagonal 0. \\
-Esto tiene sentido ya que una amiga no aporta diversión consigo misma (por eso la diagonal en 0) y la diversión que aporta una amiga $j$ con otra amiga $t$ es la misma diversión que aporta $t$ con $j$ (por eso es simétrica). \\
-Tal como relata el problema, $N$ es la cantidad de amigas de Lisa y la matriz $D$ nos dice para cada $t,j \in [1..n]$ la diversión que aportan las amigas $t$ y $j$ si se encontraran en la misma fiesta. \\
-Dado el conjunto $A = \{1,...,N\}$ (que usaremos para representar a las amigas de Lisa) y una partición $B = \{A_1,...,A_k\}$ de A, definimos $B_D$ la 'suma de una particion sobre D' como $B_D = \sum_{i=1}^{k}{\sum_{j \in A_i}^{}{\sum_{t \in A_i : t < j}^{}{D_{t,j}}}}$. \\
-Es decir, $B_D$ es la suma de $D_{t,j}$ para todo $t$ y $j$ que pertenecen al mismo subconjunto en la partición $B$, la condición $t < j$ me asegura no conciderar $D_{t,j}$ y $D_{j,t}$ ya que la matriz es simétrica y solo me interesa conciderar cuánto le aporta a la 'suma' el par una sola vez. \\
-A su vez, $B_D$ representa cuánta diversión tendríamos si separaramos a las amigas de Lisa en fiestas diferentes mediante la partición $B$. \\
-Habiendo definido eso, quiero hallar el máximo $B_D$ para cualquier partición $B$ de $A$, mejor dicho, la máxima 'suma de una particion sobre D' de $A$ posible, lo cual representaría la forma de separar a las amigas de Lisa en fiestas para que la suma de la diversión que aportan sea máxima.
+El enunciado explica un problema en el cual tengo una cierta cantidad de
+`amigas' de Lisa $N$ y para cada una de ellas sabemos la diversión que cada par
+de amigas aporta a una fiesta. Luego nos pide hallar la máxima diversión que se
+puede obtener separando a sus amigas en `fiestas' donde cada fiesta le aporta la
+diversión que suman las amigas que están en ella. \\ Yendo al algoritmo, tenemos
+como entrada un valor entero positivo $N$ y una
+matriz $D$ de $N \times N$ simétrica con valores enteros y diagonal 0.
+
+Esto tiene sentido ya que una amiga no aporta diversión consigo misma (por eso
+la diagonal en 0) y la diversión que aporta una amiga $j$ con otra amiga $t$ es
+la misma diversión que aporta $t$ con $j$ (por eso es simétrica).
+
+Tal como relata el problema, $N$ es la cantidad de amigas de Lisa y la matriz
+$D$ nos dice para cada $t,j \in [1..n]$ la diversión que aportan las amigas $t$
+y $j$ si se encontraran en la misma fiesta.
+
+Dado el conjunto $A = \{1,...,N\}$ (que usaremos para representar a las amigas
+de Lisa) y una partición $B = \{A_1,...,A_k\}$ de A, definimos $B_D$ la `suma de
+una partición sobre $D$' como:
+
+\begin{equation*}
+    B_D = \sum_{i=1}^{k}{\sum_{j \in A_i}^{}{\sum_{t \in A_i : t < j}^{}{D_{t,j}}}}
+\end{equation*}
+
+Es decir, $B_D$ es la suma de $D_{t,j}$ para todo $t$ y $j$ que pertenecen al
+mismo subconjunto en la partición $B$, la condición $t < j$ me asegura no
+considerar $D_{t,j}$ y $D_{j,t}$ ya que la matriz es simétrica y solo me
+interesa considerar cuánto le aporta a la `suma' el par una sola vez.
+
+A su vez, $B_D$ representa cuánta diversión tendríamos si separáramos a las
+amigas de Lisa en fiestas diferentes mediante la partición $B$.
+
+Habiendo definido eso, quiero hallar el máximo $B_D$ para cualquier partición
+$B$ de $A$, mejor dicho, la máxima `suma de una partición sobre D' de $A$
+posible, lo cual representaría la forma de separar a las amigas de Lisa en
+fiestas para que la suma de la diversión que aportan sea máxima.
 
 \subsection{Algoritmo e intuición}
 
 \subsubsection{Pseudocódigo}
 
 \begin{algorithm}[H]
-    \caption{MaximaSumaParticion}
+    \caption{MáximaSumaPartición}
     \Input{Entero positivo $N$ y Matriz $D$ simétrica de enteros con diagonal 0}
     $int$  $\mathit{dp[1<<N]} \gets [-1,...,-1]$ \;
     $\mathit{dp[0]} \gets 0$ \;
-    \Return{$\mathit{MaximaSumaParticionParaSubconjunto(N,D,dp,(1<<N)-1)}$}
+    \Return{\emph{MáximaSumaParticiónParaSubconjunto}$(N,D,dp,(1<<N)-1)$}
 \end{algorithm}
 
 \begin{algorithm}[H]
-    \caption{MaximaSumaParticionParaSubconjunto}
+    \caption{MáximaSumaParticiónParaSubconjunto}
     \Input{Entero positivo $N$, Matriz $D$ simétrica de enteros con diagonal 0, Arreglo $dp$ de tamaño $2^N$ y Mascara de bits $mask$}
     \eIf{$\mathit{dp[mask]}$ != $-1$} {
         \Return{$\mathit{dp[mask]}$}
@@ -39,8 +67,8 @@ Habiendo definido eso, quiero hallar el máximo $B_D$ para cualquier partición 
     $res \gets max(res, 0)$ \;
     \For {int $s1 \gets mask \& (mask-1)$; $s1$ != $0$; $s1 \gets mask \& (s1-1)$} {
         int $s2 \gets mask \& ($ $NOT$ $ s1)$ \;
-        int $c1 = MaximaSumaParticionParaSubconjunto(N, D, dp, s1)$ \;
-        int $c2 = MaximaSumaParticionParaSubconjunto(N, D, dp, s2)$ \;
+        int $c1$ = \emph{MáximaSumaParticiónParaSubconjunto}$(N, D, dp, s1)$ \;
+        int $c2$ = \emph{MáximaSumaParticiónParaSubconjunto}$(N, D, dp, s2)$ \;
         $res \gets max(res, c1+c2)$ \;
     }
     $dp[mask] \gets res$ \;
@@ -49,25 +77,47 @@ Habiendo definido eso, quiero hallar el máximo $B_D$ para cualquier partición 
 \end{algorithm}
 \bigskip
 
-Nuestro algoritmo usa la estrategia de Programación Dinámica para iterar conjuntos que representamos con máscaras de bits. Comenzamos llamando a la función recursiva 'MaximaSumaParticionParaSubconjunto' con la máscara que representa al conjunto entero y le pedimos la máxima diversión que pueden aportar. \\
-Luego la función recursiva se fija para todos sus particiones posibles, de qué forma puede dividir el conjunto tal que la diversión que aporten los subconjuntos de la partición sea máxima. Nuevamente, esto lo hacemos representando los subconjuntos con máscaras de bits y recorriendo los subconjuntos de cada conjunto de la forma que explicaron en clase.
+Nuestro algoritmo usa la estrategia de Programación Dinámica para iterar
+conjuntos que representamos con máscaras de bits. Comenzamos llamando a la
+función recursiva \emph{MáximaSumaParticiónParaSubconjunto} con la máscara que
+representa al conjunto entero y le pedimos la máxima diversión que pueden
+aportar.
+
+Luego la función recursiva se fija para todos sus particiones
+posibles, de qué forma puede dividir el conjunto tal que la diversión que
+aporten los subconjuntos de la partición sea máxima. Nuevamente, esto lo hacemos
+representando los subconjuntos con máscaras de bits y recorriendo los
+subconjuntos de cada conjunto de la forma que explicaron en clase.
 
 \subsection{Correctitud}
 
-\subsubsection{MaximaSumaParticion}
-Tal como vimos en ejemplos en clase, inicializamos un arreglo de soluciones para todos los subconjuntos posibles de 'amigas de Lisa' que llamamos $dp$, donde $dp[mask]$ al final del algoritmo nos debería haber calculado para el subconjunto de amigas que representa 'mask', la máxima suma posible de diversión que pueden aportar esas amigas repartiéndolas (particionándolas) en fiestas. \\
-Inicialmente queremos calcular la máxima diversión que puede obtenerse mediante todas las amigas de Lisa, lo cual representamos mediante la máscara de bits '11.....1' (donde la cantidad de 1s es N), lo cual escribimos como $(1<<N)-1$. \\
-Dada esta preparación le mandamos $dp$ y la máscara inicial al algoritmo 'MaximaSumaParticionParaSubconjunto' que calcula la maxima diversión para todas las amigas de Lisa.
+\subsubsection{MáximaSumaPartición}
+Tal como vimos en ejemplos en clase, inicializamos un arreglo de soluciones para
+todos los subconjuntos posibles de `amigas de Lisa' que llamamos $dp$, donde
+$dp[mask]$ al final del algoritmo nos debería haber calculado para el
+subconjunto de amigas que representa `mask', la máxima suma posible de diversión
+que pueden aportar esas amigas repartiéndolas (particionándolas) en fiestas.
 
-\subsubsection{MaximaSumaParticionParaSubconjunto}
+Inicialmente queremos calcular la máxima diversión que puede obtenerse mediante
+todas las amigas de Lisa, lo cual representamos mediante la máscara de bits
+`11...1' (donde la cantidad de 1s es N), lo cual escribimos como $(1<<N)-1$.
 
-En este algoritmo, dadas las soluciones recursivas ya calculadas en el arreglo de enteros $dp$, toma una máscara de bits $mask$ y calcula la máxima diversión que pueden aportar las amigas de Lisa que representa $mask$. \\
-En primer lugar nos fijamos si la solución ya fue calculada previamente en $dp$ y si lo fue la devolvemos. \\
-En caso contrario, calculamos tres cosas:
+Dada esta preparación le mandamos $dp$ y la máscara inicial al algoritmo
+\emph{MáximaSumaParticiónParaSubconjunto} que calcula la máxima diversión para todas
+las amigas de Lisa.
+
+\subsubsection{MáximaSumaParticiónParaSubconjunto}
+
+En este algoritmo, dadas las soluciones recursivas ya calculadas en el arreglo
+de enteros $dp$, toma una máscara de bits $mask$ y calcula la máxima diversión
+que pueden aportar las amigas de Lisa que representa $mask$.
+
+En primer lugar nos fijamos si la solución ya fue calculada previamente en $dp$
+y si lo fue la devolvemos. En caso contrario, calculamos tres cosas:
 
 \begin{itemize}
     \item [$res \gets 0$] El caso en que todas las amigas van a fiestas distintas (la diversión sería 0).
-    \item [For 1] Cuando todas las amigas de el subconjunto actual van a la misma fiesta (lo que calculamos con el primer ciclo For). Aca lo que tenemos que hacer es simplemente recorrer cada par $i,j$ con $i,j \in [1..N]$ (pero no el par $j,i$, lo cual ya explicamos al comienzo) y sumar la diversión que aportan si es que las amigas $i$ y $j$ de Lisa están en el subconjunto actual. Ver que están en el subconjunto actual (representado por $mask$) lo podemos ver exactamente de la misma forma que lo hicimos en clase: \\ 
+    \item [For 1] Cuando todas las amigas de el subconjunto actual van a la misma fiesta (lo que calculamos con el primer ciclo For). Acá lo que tenemos que hacer es simplemente recorrer cada par $i,j$ con $i,j \in [1..N]$ (pero no el par $j,i$, lo cual ya explicamos al comienzo) y sumar la diversión que aportan si es que las amigas $i$ y $j$ de Lisa están en el subconjunto actual. Ver que están en el subconjunto actual (representado por $mask$) lo podemos ver exactamente de la misma forma que lo hicimos en clase: \\
     ($mask$ \& (($1 << i$) $\|$ ($1 << j$))) $==$ (($1 << i$) $\|$ ($1 << j$)).
     \item [For 2] Vemos para cada subconjunto propio del conjunto actual cuánta diversión puedo obtener si separo el conjunto actual en dos: el subconjunto propio y su inverso. Con esto hacemos dos llamados recursivos a esta misma función y comparamos qué forma de partir el conjunto actual nos puede terminar aportando más diversión. Es importante ver que de esta manera recorremos todas las particiones posibles del conjunto actual ya que si bien en este ciclo For separamos el conjunto en dos de todas las formas posibles, cuando hago las llamadas recursivas, estos subconjuntos serán también particionados de todas las formas posibles. Como vimos en clase, recorrer los subconjuntos de un conjunto se puede hacer con: \\
     int $s1 \gets mask$; $s1$ != $0$; $s1 \gets mask \& (s1-1)$ \\
@@ -76,16 +126,31 @@ En caso contrario, calculamos tres cosas:
     Que simplemente comienza con el primer subconjunto diferente al conjunto actual.
 \end{itemize}
 
-De esas tres opciones elegimos como solución la que más diversión aporta. \\
+De esas tres opciones elegimos como solución la que más diversión aporta.
+
 Finalmente guardamos la solución para el subconjunto actual en el arreglo $dp$ y la devolvemos como respuesta.
 
 \subsection{Complejidad}
 
-Recorremos todas las $2^N$ instancias representadas con las máscaras de bits mediante llamados recursivos, pero no más que eso porque guardamos las respuestas ya calculadas con Programación Dinámica mediante un arreglo. \\
-Por cada instancia tenemos algunas asignaciones y dos ciclos For.\\
-El primer ciclo itera $O(n^2)$ combinaciones de indices y adentro realiza comparaciones y asignaciones por lo cual su complejidad es de $O(n^2)$. \\
-El segundo ciclo itera cada subconjunto del conjunto actual y adentro realiza (además de los llamados recursivos, que eso lo consideramos aparte al principio cuando dijimos que iteramos los $2^N$ subconjuntos posibles), solamente asignaciones y otras operaciones básicas. \\
-Como vimos en clase, si para cada instancia de las $2^N$ que existen iteramos sus subconjuntos, nos da una complejidad de $O(3^N)$.\\
-Además, por cada una de las instancias realizamos $O(n^2)$ operaciones mediante el primer For, lo cual conlleva una complejidad de $O(2^n * n^2) = O(3^n)$. \\
-En total tendríamos una complejidad de $O(3^n) + O(3^n) = O(3^n)$, tal como pide el enunciado.
+Recorremos todas las $2^N$ instancias representadas con las máscaras de bits
+mediante llamados recursivos, pero no más que eso porque guardamos las
+respuestas ya calculadas con Programación Dinámica mediante un arreglo.
+
+Por cada instancia tenemos algunas asignaciones y dos ciclos For.
+
+El primer ciclo itera $O(n^2)$ combinaciones de indices y adentro realiza
+comparaciones y asignaciones por lo cual su complejidad es de $O(n^2)$.
+
+El segundo ciclo itera cada subconjunto del conjunto actual y adentro realiza
+(además de los llamados recursivos, que eso lo consideramos aparte al principio
+cuando dijimos que iteramos los $2^N$ subconjuntos posibles), solamente
+asignaciones y otras operaciones básicas.
+
+Como vimos en clase, si para cada instancia de las $2^N$ que existen iteramos
+sus subconjuntos, nos da una complejidad de $O(3^N)$.\\ Además, por cada una de
+las instancias realizamos $O(n^2)$ operaciones mediante el primer For, lo cual
+conlleva una complejidad de $O(2^n * n^2) = O(3^n)$.
+
+En total tendríamos una complejidad de $O(3^n) + O(3^n) = O(3^n)$, tal como pide
+el enunciado.
 
