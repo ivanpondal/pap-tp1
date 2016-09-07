@@ -224,3 +224,25 @@ Queda demostrado entonces que la complejidad teórica del algoritmo cumple con l
 requerido por el ejercicio resultando en $\Theta\left(n \times
 \log\left(n\right)\right)$.
 
+\subsection{Casos de prueba}
+
+Para evaluar el código desarrollado además de ver que diera los resultados
+correctos en las entradas provistas por el enunciado se realizaron las
+siguientes pruebas:
+
+\begin{itemize}
+	\item{Caso base}
+	\item{Entradas con $N = 10^4$}
+\end{itemize}
+
+Para el caso base se probó el caso donde $N = 1$ con $L = 1$ donde el único
+elemento es $M$ y también cuando no lo es.
+
+Las entradas con $N = 10^4$ se realizaron tomando un $L$ al azar donde al igual
+que con el caso base se probó la existencia así como la inexistencia del
+subarreglo cuyo producto fuera $M$. Para probar la existencia dado un $L$ se
+calculó el producto de un subarreglo contiguo cualquiera de esa longitud del
+arreglo generado y se utilizó como $M$. La inexistencia se realizó utilizando un
+$M$ que tuviera como elementos todos números negativos, como el arreglo generado
+de forma aleatorio posee números enteros positivos de esta forma nos aseguramos
+que no existiera un producto donde quedaran elementos negativos.
