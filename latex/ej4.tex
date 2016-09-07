@@ -8,7 +8,7 @@ $L$ tal que su producto fuera igual a $M \in \mathbb{Z}_{10007}^{3 \times 3}$.
 Además, el algoritmo desarrollado debía tener una complejidad temporal $\ord(N
 \times \log N)$.
 
-\subsection{Solución propuesta}
+\subsection{Solución propuesta}\label{ej4:sol}
 
 La solución desarrollada hace uso de la técnica de \emph{Divide \& Conquer}.
 Esto se debe a que el problema tiene la característica de poder ser dividido en
@@ -30,21 +30,82 @@ De esta forma se puede ver entonces cómo partiendo el arreglo en dos
 mitades el ejercicio se puede resolver llamando el algoritmo de forma recursiva
 sobre cada una y estudiando el caso donde atraviesa a ambas.
 
-A continuación se presenta el pseudocódigo que resuelve el problema:
+El escenario que requiere mayor atención es el del subarreglo atravesando ambas mitades.
+Para ello, es necesario probar el producto de todo subarreglo de longitud $L$
+que se encuentre atravesando ambas mitades.
+
+Una implementación básica simplemente intentaría multiplicar desde la posición
+más a la izquierda tal que el subarreglo resultante de tamaño $L$ atravesara la
+mitad. Luego, si el producto fuera distinto a $M$, se iría corriendo de a un
+lugar a la derecha repitiendo el proceso hasta que ya no fuera posible o
+encontrase el subarreglo buscado. Esta operación sería cuadrática en el tamaño
+de $L$, que al estar acotado por $N$ resulta en una complejidad temporal
+$\ord(N^{2})$. Como esta cota supera la requerida por el ejercicio fue necesario
+optimizar esta operación.
+
+Dado que el producto de matrices es asociativo, teniendo un subarreglo de tamaño
+$L$ con elementos $M_k \dots M_{k + L - 1}$ su producto se puede calcular
+mediante:
+
+\begin{gather*}
+	\left(M_k \times M_{k + 1} \times \dots \times M_m\right) \times
+		\left(M_{m + 1} \times M_{m + 2} \times \dots \times M_{k + L - 1}\right) \\
+		\left(\forall m\right) k \leq m \leq k + L - 1
+\end{gather*}
+
+Entonces, si definimos $m = \frac{N}{2}$ el producto de todos los subarreglos de
+tamaño $L$ que atraviesan ambas mitades se puede calcular como el de las
+matrices de la mitad izquierda por el de las de la derecha.
+
+Para reducir el número de operaciones lo que se hace es para cada mitad ya tener
+calculados los productos de matrices desde la mitad hacia el extremo del
+arreglo. Cuando se realiza la llamada recursiva a la función, además de pasar el
+intervalo del arreglo sobre el cual operar, se indica mediante una bandera si se
+trata de la mitad derecha o la izquierda. Si se trata de la mitad derecha los
+productos se calculan desde el primer elemento hacia el último, caso
+contrario, del último a el primero.
+
+Esta operación tiene un costo $\ord(N)$ ya que para cada posición del arreglo se
+calcula y almacena el producto entre la matriz en ese punto y el producto hasta
+la posición anterior.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics{imagenes/subarray_product_across.pdf}
+	\caption{Ejemplo de subarreglo atravesando ambas mitades con $L = 4$ y $N = 8$.}
+	\label{ej4:fig:subarray}
+\end{figure}
+
+En la Figura \ref{ej4:fig:subarray} se tienen en color claro los elementos del
+subarreglo pertenecientes a la mitad izquierda y en color oscuro los de la
+derecha. El algoritmo calcula este producto como \texttt{producto[1]} $\times$
+\texttt{producto[4]}, donde \texttt{producto[1]} fue calculado por la mitad
+izquierda y \texttt{producto[4]} por la derecha:
+
+\begin{align*}
+	\texttt{producto[1]} &= M_1 \times \texttt{producto[2]} =
+	M_1 \times \left(M_2 \times \texttt{producto[3]}\right) =
+	M_1 \times \left(M_2 \times M_3\right) \\
+	\texttt{producto[4]} &= M_4
+\end{align*}
+
+Es así como la operación responsable de analizar si existe el subarreglo
+atravesando ambas mitades pasa a tener un costo $\ord(N)$ ya que únicamente
+realiza $\ord(L)$ productos de factores que ya posee generados.
+
+A continuación se presenta el pseudocódigo del algoritmo que resuelve el problema:
 
 \begin{algorithm}[H]
 	\caption{Producto subarreglo de matrices}
-	\Input{Enteros positivos $N$ y $L$, índices $i$ y $j$, una matriz $M$ y un
-	arreglo de matrices de longitud $N$ pertenecientes a $\mathbb{Z}_{10007}^{3
-	\times 3}$.}
-	\Output{Devuelve \texttt{true} en caso de existir un subarreglo cuyo producto
-	sea igual a $M$, \texttt{false} caso contrario.}
+	\Input{Enteros positivos $N$ y $L$, índices $i$ y $j$, bandera
+		\emph{esMitadDerecha} indicando en qué mitad está corriendo la función,
+		una matriz $M$ y un arreglo de matrices de longitud $N$ pertenecientes a
+		$\mathbb{Z}_{10007}^{3 \times 3}$.}
+	\Output{Devuelve \texttt{true} en caso de existir un subarreglo de longitud
+		$L$ cuyo producto sea igual a $M$, \texttt{false} caso contrario.}
 	\eIf{$N == 1$} {
-		\eIf{$L == 1$ y el único elemento del arreglo es igual a $M$} {
+		\If{$L == 1$ y el único elemento del arreglo es igual a $M$} {
 			\Return{\texttt{true}} \;
-		}
-		{
-			guardar el elemento en la posición $i$ del arreglo de productos \;
 		}
 	}
 	{
@@ -58,17 +119,26 @@ A continuación se presenta el pseudocódigo que resuelve el problema:
 				\Return{\texttt{true}} \;
 			}
 			{
-				\eIf{existe producto de longitud $L$ con resultado $M$ que
-				atraviese las mitades} {
+				\eIf{el producto existe atravesando ambas mitades} {
 					\Return{\texttt{true}} \;
 				}
 				{
-					calcular y guardar el producto de matrices entre $i$ y $j$ \;
+					\eIf{\emph{esMitadDerecha}} {
+						calcular y guardar el producto de matrices de $i$ a $j$ \;
+					}
+					{
+						calcular y guardar el producto de matrices de $j$ a $i$ \;
+					}
 				}
 			}
 		}
 		{
-			calcular y guardar el producto de matrices entre $i$ y $j$ \;
+			\eIf{\emph{esMitadDerecha}} {
+				calcular y guardar el producto de matrices de $i$ a $j$ \;
+			}
+			{
+				calcular y guardar el producto de matrices de $j$ a $i$ \;
+			}
 		}
 	}
 
