@@ -89,9 +89,6 @@ int solution(int budget, vector<int> donutPacks) {
 		}
 	}
 
-	if(maxDonuts == 0)
-		maxDonuts = binary_search(secondSums, budget);
-
 	return maxDonuts;
 }
 
