@@ -9,7 +9,7 @@
 // fills out a given vector with random positive numbers and returns their sum
 int randomNonNegativeVectorFillAndSum(vector<int>& v) {
     // calculate an upper bound for vector elements so they are uniformly distributed and their sum does not overflow int capacity
-	int upperBound = (int)((1<<31)-1) / v.size();
+	int upperBound = (int)((unsigned int)(1<<31)-1) / v.size();
 	int sum = 0;
 	int currentRand;
 	for (auto it = v.begin(); it != v.end(); ++it) {
