@@ -8,4 +8,67 @@ quiere conocer cuál es la maxima cantidad de dinero que pueda ser gastada
 comprando alguna combinación de paquetes, sin pasarse del presupuesto
 determinado.
 
-La complejidad temporal del algoritmo debe ser \ord($N \times 2^{N / 2}$).
+La complejidad temporal del algoritmo debe ser \ord($N \times 2^{N / 2}$) donde
+$N$ es la cantidad de paquetes.
+
+\subsection{Solución propuesta}
+
+El algoritmo propuesto para resolver este problema es generar todas las
+combinaciones de paquetes mediante \textit{Backtracking} y de ellas elegir la
+mayor que no supere al presupuesto dado. La complejidad temporal de este
+algoritmo es \ord($2^N$), lo cual no cumple con los requerimientos, pero esta
+comlejidad puede ser fácilmente alcanzable utilizando la técnica conocida como
+\textit{Meet in the middle}.
+
+Esta técnica consiste en separar en dos mitades la entrada del problema, correr
+el algortimo de backtraking en cada una y procesar los dos resultados
+inteligentemente para llegar a una solución. Debe hacerse enfoque en encontrar
+alguna manera en la que se pueda llegar a un resultado sin que el algoritmo
+acabe teniendo en una complejidad igual a la de un \textit{Backtracking} puro.
+Deben analizarse las salidas de las mitades de manera provechosa.
+
+Posteriormente en este informe se demostrará por qué este algoritmo cumple con
+los requerimientos de complejidad temporal para este ejercicio.
+
+La solución llevada a cabo consiste entonces en separar el arreglo en dos
+mitades $A$ y $B$, a cada una se le aplica un algoritmo que devuelve un arreglo
+que contiene todas las sumas posibles de los elementos de la entrada. Esto deja
+dos arreglos, llamémoslos $S_A$ y $S_B$. $S_A$ contiene todas las posibles
+combinaciones de sumas de paquetes de $A$ y $S_B$ las de $B$.
+
+Lo que se hace en este momento es ordenar crecientemente alguno de los dos y
+recorrer linealmente el otro. Se ordena $S_B$, por ejemplo, y se recorren todos
+los elementos de $S_A$. Sea $p$ el entero de la entrada que representa el
+presupuesto, para cada elemento $i$ de $S_A$ se busca en $S_B$ el máximo valor
+$j$ tal que $i + j \leq p$. Es importante que la búsqueda en $S_B$ sea a través
+de búsqueda binaria.
+
+De todos los valores $i,j$ se toman los que sumados sea el máximo, siempre
+cumpliendo que $i + j \leq p$, y ese es el resultado.
+
+\bigskip
+
+\begin{algorithm}[H]
+	\caption{Algoritmo principal}
+	\Input{Arreglo $paquetes$ de números enteros, entero $p$}
+	\Output{Devuelve la máxima suma de paquetes tal que sea menor o igual a $p$}
+    $n \gets paquetes$.tamaño() \;
+	$mitad \gets n / 2$ \;
+
+	$sumas_1 \gets posiblesSumas(paquetes[0..mitad))$ \;
+	$sumas_2 \gets posiblesSumas(paquetes[mitad..n])$ \;
+
+	ordenar($sumas_2$) \;
+
+	$maxDonas \gets 0$ \;
+	\For{$paq$ en $sumas_1$} {
+		\If {$paq \leq p$} {
+			$sum \gets paq + busqBin(sumas_2, p - paq)$ \;
+			\If {$sum > maxDonas$} {
+				$maxDonas \gets sum$ \;
+			}
+		}
+	}
+
+	\Return $maxDonas$ \;
+\end{algorithm}
