@@ -41,9 +41,27 @@ void test_example_4() {
 	ASSERT(res==153);
 }
 
+void test_example_4b() {
+	int res = solve_with_input("ej2/example_4b");
+	ASSERT(res==0);
+}
+
+void test_example_5() {
+	int res = solve_with_input("ej2/example_5");
+	ASSERT(res==8);
+}
+
+void test_example_6() {
+	int res = solve_with_input("ej2/example_6");
+	ASSERT(res==18);
+}
+
 void run_unit_tests() {
 	RUN_TEST(test_example_1);
 	RUN_TEST(test_example_2);
 	RUN_TEST(test_example_3);
 	RUN_TEST(test_example_4);
+	RUN_TEST(test_example_4b);
+	RUN_TEST(test_example_5);
+	RUN_TEST(test_example_6);
 }
