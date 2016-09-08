@@ -20,9 +20,6 @@ struct test_case {
     int expected;
 };
 
-template<typename T>
-vector<T> arr2vec(int n, T arr[]);
-
 /* solver */
 
 int max_subarray_sum(vector<int>&);
