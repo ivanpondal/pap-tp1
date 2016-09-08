@@ -12,7 +12,7 @@ Habiendo definido eso, quiero hallar el máximo $B_D$ para cualquier partición 
 
 \subsection{Algoritmo e intuición}
 
-\subsubsection{Pseudocódigo}
+\subsubsection*{Pseudocódigo}
 
 \begin{algorithm}[H]
     \caption{MaximaSumaParticion}
@@ -49,17 +49,19 @@ Habiendo definido eso, quiero hallar el máximo $B_D$ para cualquier partición 
 \end{algorithm}
 \bigskip
 
+\subsubsection*{Estrategia}
+
 Nuestro algoritmo usa la estrategia de Programación Dinámica para iterar conjuntos que representamos con máscaras de bits. Comenzamos llamando a la función recursiva 'MaximaSumaParticionParaSubconjunto' con la máscara que representa al conjunto entero y le pedimos la máxima diversión que pueden aportar. \\
 Luego la función recursiva se fija para todos sus particiones posibles, de qué forma puede dividir el conjunto tal que la diversión que aporten los subconjuntos de la partición sea máxima. Nuevamente, esto lo hacemos representando los subconjuntos con máscaras de bits y recorriendo los subconjuntos de cada conjunto de la forma que explicaron en clase.
 
 \subsection{Correctitud}
 
-\subsubsection{MaximaSumaParticion}
+\subsubsection*{MaximaSumaParticion}
 Tal como vimos en ejemplos en clase, inicializamos un arreglo de soluciones para todos los subconjuntos posibles de 'amigas de Lisa' que llamamos $dp$, donde $dp[mask]$ al final del algoritmo nos debería haber calculado para el subconjunto de amigas que representa 'mask', la máxima suma posible de diversión que pueden aportar esas amigas repartiéndolas (particionándolas) en fiestas. \\
 Inicialmente queremos calcular la máxima diversión que puede obtenerse mediante todas las amigas de Lisa, lo cual representamos mediante la máscara de bits '11.....1' (donde la cantidad de 1s es N), lo cual escribimos como $(1<<N)-1$. \\
 Dada esta preparación le mandamos $dp$ y la máscara inicial al algoritmo 'MaximaSumaParticionParaSubconjunto' que calcula la maxima diversión para todas las amigas de Lisa.
 
-\subsubsection{MaximaSumaParticionParaSubconjunto}
+\subsubsection*{MaximaSumaParticionParaSubconjunto}
 
 En este algoritmo, dadas las soluciones recursivas ya calculadas en el arreglo de enteros $dp$, toma una máscara de bits $mask$ y calcula la máxima diversión que pueden aportar las amigas de Lisa que representa $mask$. \\
 En primer lugar nos fijamos si la solución ya fue calculada previamente en $dp$ y si lo fue la devolvemos. \\
@@ -89,3 +91,98 @@ Como vimos en clase, si para cada instancia de las $2^N$ que existen iteramos su
 Además, por cada una de las instancias realizamos $O(n^2)$ operaciones mediante el primer For, lo cual conlleva una complejidad de $O(2^n * n^2) = O(3^n)$. \\
 En total tendríamos una complejidad de $O(3^n) + O(3^n) = O(3^n)$, tal como pide el enunciado.
 
+\subsection{Casos de prueba}
+
+En primera instancia comprobamos que el algoritmo devuelva la salida correcta para los casos provistos por la cátedra. \\
+Luego generamos nuestras propias instancias bajo las condiciones del enunciado, es decir, matrices cuadradas y simétricas con diagonal 0 de tamaño menor o igual a 18. \\
+Mediante estos, comprobamos no solo la correctitud misma del algoritmo sino también casos borde 
+(por ejemplo, que todas las amigas de Lisa se lleven mal entre sí) 
+y que no tarde demasiado en encontrar una respuesta para instancias grandes.
+
+
+\subsubsection*{Caso 1}
+
+\textbf{Motivo}: Comprobamos que el algoritmo funcione correctamente en una instancia un poco mas grande que las provistas por la cátedra. \\
+
+\textbf{Entrada}:
+
+\begin{flushleft}
+$\qquad N = 5$\\[10pt]
+$\qquad D = \left( \begin{smallmatrix}
+0 & 2 & 2 & -1 & 2 \\
+2 & 0 & -10 & 1 & 1 \\
+2 & -10 & 0 & -2 & 2 \\
+-1 & 1 & -2 & 0 & 3 \\
+2 & 1 & 2 & 3 & 0 \\
+\end{smallmatrix} \right)$
+\end{flushleft}
+
+\textbf{Resultado}: El algoritmo nos dio como resultado 8 y lo hizo de manera inmediata. Esto tiene sentido ya 
+que es una instancia chica y llegamos a esa solución tomando las amigas $\{ 0, 1, 3, 4 \}$ en una fiesta y $\{ 2 \}$ en otra fiesta.
+
+\subsubsection*{Caso 2}
+
+\textbf{Motivo}: Comprobamos el funcionamiento del algoritmo para una instancia un poco más grande donde tenemos 3 clanes de amigas de Lisa bien definidos. 
+Cada clan es de 4 amigas que se llevan bien entre sí pero con nadie más de otros clanes. \\
+
+\textbf{Entrada}:
+
+\begin{flushleft}
+$\qquad N = 12$\\[10pt]
+$\qquad D = \left( \begin{smallmatrix}
+0 & 1 & 1 & 1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+1 & 0 & 1 & 1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+1 & 1 & 0 & 1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+1 & 1 & 1 & 0 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & 0 & 1 & 1 & 1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & 1 & 0 & 1 & 1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & 1 & 1 & 0 & 1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & 1 & 1 & 1 & 0 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & 0 & 1 & 1 & 1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & 1 & 0 & 1 & 1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & 1 & 1 & 0 & 1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & 1 & 1 & 1 & 0 \\
+\end{smallmatrix} \right)$
+\end{flushleft}
+
+\textbf{Resultado}: El algoritmo nos dio como resultado 18 y lo hizo de manera casi inmediata (no lento, pero no
+ tan instantáneo como el caso anterior). Como podíamos predecir, el algoritmo nos da el resultado de agrupar 
+ cada uno de los 3 clanes de los que hablábamos previamente. Cada amiga en un clan aporta 1 punto de diversión 
+ con las demás, por lo tanto un clan de 4 amigas suma en total 6 puntos de diversión, es decir el número 
+ combinatorio (4,2) que son las formas de tomar 2 amigas de un clan de 4. Si sumamos la diversión de cada fiesta
+ de cada clan nos da $3 * 6 = 18$ unidades de diversión.
+
+\subsubsection*{Caso 3}
+
+\textbf{Motivo}: Queremos comprobar cuánto tiempo tarda el algoritmo para una instancia de tamaño máximo y ver el resultado para el caso en que ninguna amiga de Lisa se lleva bien con las demás.
+
+\textbf{Entrada}:
+
+\begin{flushleft}
+$\qquad N = 18$\\[10pt]
+$\qquad D = \left( \begin{smallmatrix}
+0 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+-1 & 0 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & 0 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & 0 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & 0 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & -1 & 0 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & 0 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & 0 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & 0 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & 0 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & 0 & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & 0 & -1 & -1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & 0 & -1 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & 0 & -1 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & 0 & -1 & -1 & -1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & 0 & -1 & -1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & 0 & -1 \\
+-1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & -1 & 0 \\
+\end{smallmatrix} \right)$
+\end{flushleft}
+
+\textbf{Resultado}: El algoritmo nos dió como resultado 0, lo cual era de esperarse ya que ninguna amiga de Lisa 
+se llevaba bien con las demás y por lo tanto se deben separar en una fiesta por amiga. En cuanto al tiempo que 
+tardó en dar esta respuesta fue de un par de segundos, lo cual indica que el tiempo aumenta bastante a medida 
+que crecen las instancias pero aún asi lo resuelve en tiempo razonable para las cotas dadas por la cátedra.
