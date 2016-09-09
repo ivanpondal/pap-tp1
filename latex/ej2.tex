@@ -2,12 +2,12 @@
 
 Peso asignado: 9.
 \subsection{Problema}
-El enunciado explica un problema en el cual tengo una cierta cantidad de
-`amigas' de Lisa $N$ y para cada una de ellas sabemos la diversión que cada par
-de amigas aporta a una fiesta. Luego nos pide hallar la máxima diversión que se
+El enunciado explica un problema en el cual se tiene una cierta cantidad de
+`amigas' de Lisa $N$ y para cada una de ellas se sabe la diversión que cada par
+de amigas aporta a una fiesta. Luego se pide hallar la máxima diversión que se
 puede obtener separando a sus amigas en `fiestas' donde cada fiesta le aporta la
-diversión que suman las amigas que están en ella. \\ Yendo al algoritmo, tenemos
-como entrada un valor entero positivo $N$ y una
+diversión que suman las amigas que están en ella. \\ Yendo al algoritmo, se
+tiene como entrada un valor entero positivo $N$ y una
 matriz $D$ de $N \times N$ simétrica con valores enteros y diagonal 0.
 
 Esto tiene sentido ya que una amiga no aporta diversión consigo misma (por eso
@@ -15,10 +15,10 @@ la diagonal en 0) y la diversión que aporta una amiga $j$ con otra amiga $t$ es
 la misma diversión que aporta $t$ con $j$ (por eso es simétrica).
 
 Tal como relata el problema, $N$ es la cantidad de amigas de Lisa y la matriz
-$D$ nos dice para cada $t,j \in [1..n]$ la diversión que aportan las amigas $t$
+$D$ dice para cada $t,j \in [1..n]$ la diversión que aportan las amigas $t$
 y $j$ si se encontraran en la misma fiesta.
 
-Dado el conjunto $A = \{1,...,N\}$ (que usaremos para representar a las amigas
+Dado el conjunto $A = \{1,...,N\}$ (que se usarán para representar a las amigas
 de Lisa) y una partición $B = \{A_1,...,A_k\}$ de A, definimos $B_D$ la `suma de
 una partición sobre $D$' como:
 
@@ -27,14 +27,14 @@ una partición sobre $D$' como:
 \end{equation*}
 
 Es decir, $B_D$ es la suma de $D_{t,j}$ para todo $t$ y $j$ que pertenecen al
-mismo subconjunto en la partición $B$, la condición $t < j$ me asegura no
-considerar $D_{t,j}$ y $D_{j,t}$ ya que la matriz es simétrica y solo me
+mismo subconjunto en la partición $B$, la condición $t < j$ asegura no
+considerar $D_{t,j}$ y $D_{j,t}$ ya que la matriz es simétrica y solo
 interesa considerar cuánto le aporta a la `suma' el par una sola vez.
 
-A su vez, $B_D$ representa cuánta diversión tendríamos si separáramos a las
+A su vez, $B_D$ representa cuánta diversión se tendría si se separan las
 amigas de Lisa en fiestas diferentes mediante la partición $B$.
 
-Habiendo definido eso, quiero hallar el máximo $B_D$ para cualquier partición
+Habiendo definido eso, se quiere hallar el máximo $B_D$ para cualquier partición
 $B$ de $A$, mejor dicho, la máxima `suma de una partición sobre D' de $A$
 posible, lo cual representaría la forma de separar a las amigas de Lisa en
 fiestas para que la suma de la diversión que aportan sea máxima.
@@ -80,34 +80,34 @@ fiestas para que la suma de la diversión que aportan sea máxima.
 
 \subsubsection*{Estrategia}
 
-Nuestro algoritmo usa la estrategia de Programación Dinámica para iterar
-conjuntos que representamos con máscaras de bits. Comenzamos llamando a la
+El algoritmo usa la estrategia de Programación Dinámica para iterar
+conjuntos que son representados con máscaras de bits. Comienza llamando a la
 función recursiva \emph{MáximaSumaParticiónParaSubconjunto} con la máscara que
-representa al conjunto entero y le pedimos la máxima diversión que pueden
+representa al conjunto entero y se pide la máxima diversión que pueden
 aportar.
 
 Luego la función recursiva se fija para todos sus particiones
 posibles, de qué forma puede dividir el conjunto tal que la diversión que
-aporten los subconjuntos de la partición sea máxima. Nuevamente, esto lo hacemos
+aporten los subconjuntos de la partición sea máxima. Nuevamente, esto lo se hace
 representando los subconjuntos con máscaras de bits y recorriendo los
-subconjuntos de cada conjunto de la forma que explicaron en clase.
+subconjuntos de cada conjunto de la forma que fuer explicada en clase.
 
 \subsection{Correctitud}
 
 \subsubsection*{MáximaSumaPartición}
-Tal como vimos en ejemplos en clase, inicializamos un arreglo de soluciones para
-todos los subconjuntos posibles de `amigas de Lisa' que llamamos $dp$, donde
-$dp[mask]$ al final del algoritmo nos debería haber calculado para el
+Tal como fue visto en ejemplos en clase, inicializamos un arreglo de soluciones
+para todos los subconjuntos posibles de `amigas de Lisa' que fueron llamados
+$dp$, donde $dp[mask]$ al final del algoritmo debería haber calculado para el
 subconjunto de amigas que representa `mask', la máxima suma posible de diversión
 que pueden aportar esas amigas repartiéndolas (particionándolas) en fiestas.
 
-Inicialmente queremos calcular la máxima diversión que puede obtenerse mediante
-todas las amigas de Lisa, lo cual representamos mediante la máscara de bits
-`11...1' (donde la cantidad de 1s es N), lo cual escribimos como $(1<<N)-1$.
+Inicialmente se quiere calcular la máxima diversión que puede obtenerse mediante
+todas las amigas de Lisa, lo cual se representa mediante la máscara de bits
+`11...1' (donde la cantidad de 1s es N), lo cual se escribe como $(1<<N)-1$.
 
-Dada esta preparación le mandamos $dp$ y la máscara inicial al algoritmo
-\emph{MáximaSumaParticiónParaSubconjunto} que calcula la máxima diversión para todas
-las amigas de Lisa.
+Dada esta preparación se manda $dp$ y la máscara inicial al algoritmo
+\emph{MáximaSumaParticiónParaSubconjunto} que calcula la máxima diversión para
+todas las amigas de Lisa.
 
 \subsubsection*{MáximaSumaParticiónParaSubconjunto}
 
@@ -115,60 +115,60 @@ En este algoritmo, dadas las soluciones recursivas ya calculadas en el arreglo
 de enteros $dp$, toma una máscara de bits $mask$ y calcula la máxima diversión
 que pueden aportar las amigas de Lisa que representa $mask$.
 
-En primer lugar nos fijamos si la solución ya fue calculada previamente en $dp$
-y si lo fue la devolvemos. En caso contrario, calculamos tres cosas:
+En primer lugar se fija si la solución ya fue calculada previamente en $dp$
+y si lo fue la devolvemos. En caso contrario, se calculan tres cosas:
 
 \begin{itemize}
     \item [$res \gets 0$] El caso en que todas las amigas van a fiestas distintas (la diversión sería 0).
-    \item [For 1] Cuando todas las amigas de el subconjunto actual van a la misma fiesta (lo que calculamos con el primer ciclo For). Acá lo que tenemos que hacer es simplemente recorrer cada par $i,j$ con $i,j \in [1..N]$ (pero no el par $j,i$, lo cual ya explicamos al comienzo) y sumar la diversión que aportan si es que las amigas $i$ y $j$ de Lisa están en el subconjunto actual. Ver que están en el subconjunto actual (representado por $mask$) lo podemos ver exactamente de la misma forma que lo hicimos en clase: \\
+    \item [For 1] Cuando todas las amigas de el subconjunto actual van a la misma fiesta (lo que se calcula con el primer ciclo For). Acá lo que tiene que hacerse es simplemente recorrer cada par $i,j$ con $i,j \in [1..N]$ (pero no el par $j,i$, lo cual ya fue explicado al comienzo) y sumar la diversión que aportan si es que las amigas $i$ y $j$ de Lisa están en el subconjunto actual. Ver que están en el subconjunto actual (representado por $mask$) puede verse exactamente de la misma forma que fue realizada en clase: \\
     ($mask$ \& (($1 << i$) $\|$ ($1 << j$))) $==$ (($1 << i$) $\|$ ($1 << j$)).
-    \item [For 2] Vemos para cada subconjunto propio del conjunto actual cuánta diversión puedo obtener si separo el conjunto actual en dos: el subconjunto propio y su complemento (que obtenemos con $s2 \gets mask \& ($ $NOT$ $ s1)$). Con esto hacemos dos llamados recursivos a esta misma función y comparamos qué forma de partir el conjunto actual nos puede terminar aportando más diversión. Es importante ver que de esta manera recorremos todas las particiones posibles del conjunto actual ya que si bien en este ciclo For separamos el conjunto en dos de todas las formas posibles, cuando hago las llamadas recursivas, estos subconjuntos serán también particionados de todas las formas posibles. Como vimos en clase, recorrer los subconjuntos de un conjunto se puede hacer con: \\
+    \item [For 2] Se ve para cada subconjunto propio del conjunto actual cuánta diversión puedo obtener si se separa el conjunto actual en dos: el subconjunto propio y su complemento (que obtenemos con $s2 \gets mask \& ($ $NOT$ $ s1)$). Con esto hacemos dos llamados recursivos a esta misma función y comparamos qué forma de partir el conjunto actual puede terminar aportando más diversión. Es importante ver que de esta manera se recorren todas las particiones posibles del conjunto actual ya que si bien en este ciclo For separamos el conjunto en dos de todas las formas posibles, cuando hago las llamadas recursivas, estos subconjuntos serán también particionados de todas las formas posibles. Como fue visto en clase, recorrer los subconjuntos de un conjunto se puede hacer con: \\
     int $s1 \gets mask$; $s1$ != $0$; $s1 \gets mask \& (s1-1)$ \\
-    Pero en este código queremos recorrer los subconjuntos propios, por lo cual lo modificamos a: \\
+    Pero en este código se quiere recorrer los subconjuntos propios, por lo cual se modifica a: \\
     int $s1 \gets mask \& (mask-1)$; $s1$ != $0$; $s1 \gets mask \& (s1-1)$ \\
     Que simplemente comienza con el primer subconjunto diferente al conjunto actual.
 \end{itemize}
 
-De esas tres opciones elegimos como solución la que más diversión aporta.
+De esas tres opciones se elige como solución la que más diversión aporta.
 
-Finalmente guardamos la solución para el subconjunto actual en el arreglo $dp$ y la devolvemos como respuesta.
+Finalmente se guarda la solución para el subconjunto actual en el arreglo $dp$ y se la devuelve como respuesta.
 
 \subsection{Complejidad}
 
-Recorremos todas las $2^N$ instancias representadas con las máscaras de bits
-mediante llamados recursivos, pero no más que eso porque guardamos las
+Se recorren todas las $2^N$ instancias representadas con las máscaras de bits
+mediante llamados recursivos, pero no más que eso porque se guardan las
 respuestas ya calculadas con Programación Dinámica mediante un arreglo.
 
-Por cada instancia tenemos algunas asignaciones y dos ciclos For.
+Por cada instancia se tienen algunas asignaciones y dos ciclos For.
 
 El primer ciclo itera $O(n^2)$ combinaciones de indices y adentro realiza
 comparaciones y asignaciones por lo cual su complejidad es de $O(n^2)$.
 
 El segundo ciclo itera cada subconjunto del conjunto actual y adentro realiza
-(además de los llamados recursivos, que eso lo consideramos aparte al principio
+(además de los llamados recursivos, que eso fue considerado aparte al principio
 cuando dijimos que iteramos los $2^N$ subconjuntos posibles), solamente
 asignaciones y otras operaciones básicas.
 
-Como vimos en clase, si para cada instancia de las $2^N$ que existen iteramos
-sus subconjuntos, nos da una complejidad de $O(3^N)$.\\ Además, por cada una de
-las instancias realizamos $O(n^2)$ operaciones mediante el primer For, lo cual
+Como se vio en clase, si para cada instancia de las $2^N$ que existen se iteran
+sus subconjuntos, da una complejidad de $O(3^N)$.\\ Además, por cada una de
+las instancias se realiza $O(n^2)$ operaciones mediante el primer For, lo cual
 conlleva una complejidad de $O(2^n * n^2) = O(3^n)$.
 
-En total tendríamos una complejidad de $O(3^n) + O(3^n) = O(3^n)$, tal como pide
+En total se tiene una complejidad de $O(3^n) + O(3^n) = O(3^n)$, tal como pide
 el enunciado.
 
 \subsection{Casos de prueba}
 
-En primera instancia comprobamos que el algoritmo devuelva la salida correcta para los casos provistos por la cátedra. \\
-Luego generamos nuestras propias instancias bajo las condiciones del enunciado, es decir, matrices cuadradas y simétricas con diagonal 0 de tamaño menor o igual a 18. \\
-Mediante estos, comprobamos no solo la correctitud misma del algoritmo sino también casos borde 
+En primera instancia se comrpobó que el algoritmo devuelva la salida correcta para los casos provistos por la cátedra. \\
+Luego fueron generadas instancias propias bajo las condiciones del enunciado, es decir, matrices cuadradas y simétricas con diagonal 0 de tamaño menor o igual a 18. \\
+Mediante estos, se comrpobó no solo la correctitud misma del algoritmo sino también casos borde 
 (por ejemplo, que todas las amigas de Lisa se lleven mal entre sí) 
 y que no tarde demasiado en encontrar una respuesta para instancias grandes.
 
 
 \subsubsection*{Caso 1}
 
-\textbf{Motivo}: Comprobamos que el algoritmo funcione correctamente en una instancia un poco mas grande que las provistas por la cátedra. \\
+\textbf{Motivo}: Se comprobó que el algoritmo funcione correctamente en una instancia un poco mas grande que las provistas por la cátedra. \\
 
 \textbf{Entrada}:
 
@@ -183,12 +183,12 @@ $\qquad D = \left( \begin{smallmatrix}
 \end{smallmatrix} \right)$
 \end{flushleft}
 
-\textbf{Resultado}: El algoritmo nos dio como resultado 8 y lo hizo de manera inmediata. Esto tiene sentido ya
-que es una instancia chica y llegamos a esa solución tomando las amigas $\{ 0, 1, 3, 4 \}$ en una fiesta y $\{ 2 \}$ en otra fiesta.
+\textbf{Resultado}: El algoritmo dio como resultado 8 y lo hizo de manera inmediata. Esto tiene sentido ya 
+que es una instancia chica y se llega a esa solución tomando las amigas $\{ 0, 1, 3, 4 \}$ en una fiesta y $\{ 2 \}$ en otra fiesta.
 
 \subsubsection*{Caso 2}
 
-\textbf{Motivo}: Comprobamos el funcionamiento del algoritmo para una instancia un poco más grande donde tenemos 3 clanes de amigas de Lisa bien definidos. 
+\textbf{Motivo}: Se comprobó el funcionamiento del algoritmo para una instancia un poco más grande donde tenemos 3 clanes de amigas de Lisa bien definidos. 
 Cada clan es de 4 amigas que se llevan bien entre sí pero con nadie más de otros clanes. \\
 
 \textbf{Entrada}:
@@ -211,16 +211,16 @@ $\qquad D = \left( \begin{smallmatrix}
 \end{smallmatrix} \right)$
 \end{flushleft}
 
-\textbf{Resultado}: El algoritmo nos dio como resultado 18 y lo hizo de manera casi inmediata (no lento, pero no
- tan instantáneo como el caso anterior). Como podíamos predecir, el algoritmo nos da el resultado de agrupar 
- cada uno de los 3 clanes de los que hablábamos previamente. Cada amiga en un clan aporta 1 punto de diversión 
+\textbf{Resultado}: El algoritmo dio como resultado 18 y lo hizo de manera casi inmediata (no lento, pero no
+ tan instantáneo como el caso anterior). Como podía predecirse, el algoritmo da el resultado de agrupar 
+ cada uno de los 3 clanes de los que se habló previamente. Cada amiga en un clan aporta 1 punto de diversión 
  con las demás, por lo tanto un clan de 4 amigas suma en total 6 puntos de diversión, es decir el número 
- combinatorio (4,2) que son las formas de tomar 2 amigas de un clan de 4. Si sumamos la diversión de cada fiesta
+ combinatorio (4,2) que son las formas de tomar 2 amigas de un clan de 4. Si se suma la diversión de cada fiesta
  de cada clan nos da $3 * 6 = 18$ unidades de diversión.
 
 \subsubsection*{Caso 3}
 
-\textbf{Motivo}: Queremos comprobar cuánto tiempo tarda el algoritmo para una instancia de tamaño máximo y ver el resultado para el caso en que ninguna amiga de Lisa se lleva bien con las demás.
+\textbf{Motivo}: Se quiere comprobar cuánto tiempo tarda el algoritmo para una instancia de tamaño máximo y ver el resultado para el caso en que ninguna amiga de Lisa se lleva bien con las demás.
 
 \textbf{Entrada}:
 
@@ -248,7 +248,8 @@ $\qquad D = \left( \begin{smallmatrix}
 \end{smallmatrix} \right)$
 \end{flushleft}
 
-\textbf{Resultado}: El algoritmo nos dio como resultado 0, lo cual era de esperarse ya que ninguna amiga de Lisa
+\textbf{Resultado}: El algoritmo dió como resultado 0, lo cual era de esperarse ya que ninguna amiga de Lisa 
+
 se llevaba bien con las demás y por lo tanto se deben separar en una fiesta por amiga. En cuanto al tiempo que 
 tardó en dar esta respuesta fue de un par de segundos, lo cual indica que el tiempo aumenta bastante a medida 
 que crecen las instancias pero aún así lo resuelve en tiempo razonable para las cotas dadas por la cátedra.
