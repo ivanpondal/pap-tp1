@@ -1,8 +1,0 @@
-\subsection{Problema}
-Dado un arreglo de números enteros de entrada, se pide encontrar la máxima suma posible de elementos correspondientes a subarreglos contiguos de dicha entrada. Se considera que el arreglo vacío tiene suma nula y que cumple ser un subarreglo contiguo de todo arreglo.
-
-\subsection{Algoritmo}
-
-acumulador, maximo 0.
-
-Nuestro algoritmo utiliza un acumulador inicializado en cero e itera los elementos del arreglo recorriéndolo de principio a fin una sola vez. En cada iteración, 
