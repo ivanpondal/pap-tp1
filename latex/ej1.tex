@@ -73,8 +73,8 @@ cumpliendo que $i + j \leq p$, y ese es el resultado.
 		}
 	}
 
-	\If {$sumas_1$.tamaño() $== 0  && sumas_2[1] \leq p$} {
-		maxDonas \gets sumas_2[1] \;
+	\If {$sumas_1$.tamaño() $== 0  \land sumas_2[1] \leq p$} {
+		$maxDonas \gets sumas_2[1]$ \;
 	}
 
 	\Return $maxDonas$ \;
@@ -153,3 +153,24 @@ Una vez hecho esto se ordena uno de los dos arreglos. Esto cuesta $\ord(largo(ar
 Para finalizar se recorre linealmente el arreglo no ordenado realizando para cada uno de sus elementos una búsqueda binaria sobre el arreglo ordenado, y quedándose con el mayor. Recorrer el arreglo no ordenado cuesta $\ord(2^{\frac{n}{2}})$ y hacer una búsqueda en el arreglo ordenado $\ord(log(2^{\frac{n}{2}}))$ que es equivalente a $\ord(n)$ por lo que el costo de este recorrido es $\ord(2^{\frac{n}{2}} \times n)$.
 
 La complejidad final es entonces $\ord(2^{\frac{n}{2}} + 2^{\frac{n}{2}} \times n + 2^{\frac{n}{2}} \times n) = \ord(2^{\frac{n}{2}} \times n)$.
+
+\subsection{Casos de prueba}
+
+Luego de comprobar que el algoritmo se comportaba de manera correcta con
+respecto a los tests de la cátedra fueron generadas otras instancias de prueba
+con el fin de cubrir todos los posibles casos del problema.
+
+\begin{itemize}
+\item Caso borde con un único elemento. Es necesario para comprobar que el
+algoritmo se comporta adecuadamente no sólo al ser una cantidad impar de
+elementos sino al dejar una de las mitades sin elementos, lo cual podría traer
+problemas al momento de hacer los recorridos.
+\item Caso en que todos los elementos superan el presupuesto. Debería devolver
+0. Es importante ya que es el valor predeterminado en caso en que todas las
+opciones fueran descartadas.
+\item Caso en que el resultado es el menor elemento del arreglo. El motivo de
+esto es para corroborar la buena funcionalidad de la busqueda binaria, resulta
+ser uno de los casos borde para el cual hay que tener cuidado a la hora de
+implementar la búsqueda.
+\item Casos normales en los que no se comprueba un caso borde en especial.
+\end{itemize}
