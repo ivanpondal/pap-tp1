@@ -72,3 +72,41 @@ cumpliendo que $i + j \leq p$, y ese es el resultado.
 
 	\Return $maxDonas$ \;
 \end{algorithm}
+
+\subsection{Correctitud}
+
+Para demostrar que el algoritmo es correcto, es decir que la salida se
+corresponde con lo requerido, debe demostrarse que el resultado del algoritmo es
+la máxima suma de elementos del arreglo de entrada tal que es menor o igual al
+entero que representa el presupuesto.
+
+Lo primero que realiza el algoritmo es dividir en mitades el arreglo de entrada
+y aplicar fuerza bruta sobre cada uno para conocer todas combinaciones de sumas
+de los elementos de cada arreglo. Esto deja entonces los arreglos que
+previamente fueron nombrados como $S_A$ y $S_B$.
+
+Cada elemento en estos arreglos representa intrínsecamente una combinación de elementos de $A$ y de $B$, ya que cada elemento de $S_A$ y $S_B$ es calculado mediante decidir si cada elemento de $A$ y $B$, respectivamente, forma parte de la suma o no.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{imagenes/ex1_example1.pdf}
+	\caption{Ejemplo de los posibles conjuntos de un arreglo.}
+	\label{ej1:fig:combinations}
+\end{figure}
+
+En otras palabras, cada elemento de $S_A$ y $S_B$ es una suma de uno de los $2^{N / 2}$
+conjuntos de elementos que pueden formarse de $A$ y $B$ respectivamente, donde cada conjunto es distinto al anterior, por lo que se exploran todos los conjuntos posibles de $A$ y de $B$.
+
+Entonces si se tiene separados todos los conjuntos posibles de $A$ y todos los de $B$, se tiene todos los conjuntos posibles del arreglo original. Mediante la suma de ambos valores se obtiene un elemento que representa una combinación única de los elementos del arreglo original. Esto no quiere decir que los valores sean distintos, de hecho es muy probable que se repitan como en el siguiente ejemplo
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{imagenes/ex1_example2.pdf}
+	\caption{Ejemplo de posible repetición de valores sumando conjuntos distintos.}
+	\label{ej1:fig:value_repetition}
+\end{figure}
+
+
+pero como puede observarse cada uno representa una combinación de elementos distinta.
+
+De esta forma se tienen calculadas las sumas de todas la posibles combinaciones del arreglo de entrada, por lo que solo resta buscar las que cumplan ser menor o igual al presupuesto y entre ellas la máxima.
