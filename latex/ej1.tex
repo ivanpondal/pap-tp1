@@ -30,6 +30,9 @@ Deben analizarse las salidas de las mitades de manera provechosa.
 Posteriormente en este informe se demostrará por qué este algoritmo cumple con
 los requerimientos de complejidad temporal para este ejercicio.
 
+Es necesario aclarar que el algoritmo es válido cuando el vector de entrada
+tiene al menos un elemento y el presupuesto es mayor o igual a cero.
+
 La solución llevada a cabo consiste entonces en separar el arreglo en dos
 mitades $A$ y $B$, a cada una se le aplica un algoritmo que devuelve un arreglo
 que contiene todas las sumas posibles de los elementos de la entrada. Esto deja
@@ -70,8 +73,23 @@ cumpliendo que $i + j \leq p$, y ese es el resultado.
 		}
 	}
 
+	\If {$sumas_1$.tamaño() $== 0  && sumas_2[1] \leq p$} {
+		maxDonas \gets sumas_2[1] \;
+	}
+
 	\Return $maxDonas$ \;
 \end{algorithm}
+
+Puede apreciarse al final del algoritmo una estructura de decisión. Su propósito
+es simplemente salvar el caso en el que el arreglo de entrada tiene un único
+elemento, lo que lleva a que al dividir el arreglo en dos quede la primer mitad
+sin elementos por lo cual nunca se entra en la estructura de repetición. Esto es
+porque si el arreglo es de largo impar el elemento extra queda en la segunda
+mitad, que al ser sobre la cual se hace la búsqueda binaria es levemente
+conveniente que el arreglo mas largo de las dos mitades sea ese. Como se sabe
+que el arreglo tiene al menos un elemento, si las sumas de la primer mitad no
+tiene elementos entonces la sumas de la segunda tiene dos elementos: 0 y el
+único elemento del arreglo original.
 
 \subsection{Correctitud}
 

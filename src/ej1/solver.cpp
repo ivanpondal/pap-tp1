@@ -89,6 +89,9 @@ int solution(int budget, vector<int> donutPacks) {
 		}
 	}
 
+	if(firstSums.size() == 0  && secondSums[1] <= budget)
+		maxDonuts = secondSums[1];
+
 	return maxDonuts;
 }
 
