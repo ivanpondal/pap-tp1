@@ -6,7 +6,7 @@ Peso asignado: 8.
 
 Se tiene un entero que representa el presupuesto con el que se cuenta y un
 arreglo de enteros donde cada elemento representa el precio de un paquete. Se
-quiere conocer cuál es la maxima cantidad de dinero que pueda ser gastada
+quiere conocer cuál es la máxima cantidad de dinero que pueda ser gastada
 comprando alguna combinación de paquetes, sin pasarse del presupuesto
 determinado.
 
@@ -19,11 +19,11 @@ El algoritmo propuesto para resolver este problema es generar todas las
 combinaciones de paquetes mediante \textit{Backtracking} y de ellas elegir la
 mayor que no supere al presupuesto dado. La complejidad temporal de este
 algoritmo es \ord($2^N$), lo cual no cumple con los requerimientos, pero esta
-comlejidad puede ser fácilmente alcanzable utilizando la técnica conocida como
+complejidad puede ser fácilmente alcanzable utilizando la técnica conocida como
 \textit{Meet in the middle}.
 
 Esta técnica consiste en separar en dos mitades la entrada del problema, correr
-el algortimo de backtraking en cada una y procesar los dos resultados
+el algoritmo de backtracking en cada una y procesar los dos resultados
 inteligentemente para llegar a una solución. Debe hacerse enfoque en encontrar
 alguna manera en la que se pueda llegar a un resultado sin que el algoritmo
 acabe teniendo en una complejidad igual a la de un \textit{Backtracking} puro.
@@ -187,7 +187,7 @@ problemas al momento de hacer los recorridos.
 0. Es importante ya que es el valor predeterminado en caso en que todas las
 opciones fueran descartadas.
 \item Caso en que el resultado es el menor elemento del arreglo. El motivo de
-esto es para corroborar la buena funcionalidad de la busqueda binaria, resulta
+esto es para corroborar la buena funcionalidad de la búsqueda binaria, resulta
 ser uno de los casos borde para el cual hay que tener cuidado a la hora de
 implementar la búsqueda.
 \item Casos normales en los que no se comprueba un caso borde en especial.
