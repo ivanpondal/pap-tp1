@@ -124,3 +124,14 @@ distinta.
 De esta forma se tienen calculadas las sumas de todas la posibles combinaciones
 del arreglo de entrada, por lo que solo resta buscar las que cumplan ser menor o
 igual al presupuesto y entre ellas la máxima.
+
+
+\subsection{Complejidad teórica}
+
+Se divide el arreglo de entrada en dos, lo cual tiene un costo lineal. Ahora estos arreglos tienen un tamaño de $\frac{n}{2}$. A cada uno de ellos se le calcula, a través de un algoritmo de \textit{Backtracking} por fuerza bruta, todas las posibles sumas de sus elementos. Como fue hablado anteriormente, es equivalente a formar todos los posibles subconjuntos lo cual tiene costo $\ord(2^{largo(arreglo)})$  y como el tamaño de los arreglos es de $\frac{n}{2}$, el costo es de $\ord(2^{\frac{n}{2}})$.
+
+Una vez hecho esto se ordena uno de los dos arreglos. Esto cuesta $\ord(largo(arreglo) \times log(largo(arreglo)))$ lo cual en este caso es $\ord(2^{\frac{n}{2}} \times log(2^{\frac{n}{2}}))$ que a su vez es $\ord(2^{\frac{n}{2}} \times n)$.
+
+Para finalizar se recorre linealmente el arreglo no ordenado realizando para cada uno de sus elementos una búsqueda binaria sobre el arreglo ordenado, y quedándose con el mayor. Recorrer el arreglo no ordenado cuesta $\ord(2^{\frac{n}{2}})$ y hacer una búsqueda en el arreglo ordenado $\ord(log(2^{\frac{n}{2}}))$ que es equivalente a $\ord(n)$ por lo que el costo de este recorrido es $\ord(2^{\frac{n}{2}} \times n)$.
+
+La complejidad final es entonces $\ord(2^{\frac{n}{2}} + 2^{\frac{n}{2}} \times n + 2^{\frac{n}{2}} \times n) = \ord(2^{\frac{n}{2}} \times n)$.
